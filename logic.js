@@ -133,8 +133,40 @@ function logSkill(skillName) {
 }
 
 //****************** TOOLTIPS LOGICA
-function showInfo(el) { el.querySelector('.tooltip').style.display = 'block'; }
-function hideInfo(el) { el.querySelector('.tooltip').style.display = 'none'; }
+// Función para inicializar los tooltips de habilidades
+function configurarTooltips() {
+    const iconos = document.querySelectorAll('.info-icon');
+
+    iconos.forEach(icono => {
+        icono.addEventListener('click', (e) => {
+            // Evitamos que el clic cierre el menú si está dentro de uno
+            e.stopPropagation();
+
+            const tooltip = icono.querySelector('.tooltip');
+
+            // Cerramos otros tooltips abiertos primero (opcional, para limpieza)
+            document.querySelectorAll('.tooltip.active').forEach(t => {
+                if (t !== tooltip) t.classList.remove('active');
+            });
+
+            // Alternamos el estado del actual
+            tooltip.classList.toggle('active');
+        });
+    });
+
+    // Cerrar el tooltip si haces clic en cualquier otra parte de la pantalla
+    document.addEventListener('click', () => {
+        document.querySelectorAll('.tooltip.active').forEach(t => {
+            t.classList.remove('active');
+        });
+    });
+}
+
+// Recuerda llamar a configurarTooltips() cuando cargue la página
+window.onload = () => {
+    configurarTooltips();
+    // ... tus otras funciones de inicio
+};
 
 //****************** IA LOGICA (Configurada con el Prompt Maestro)
 const API_KEY = "REPLACE_WITH_API_KEY";
@@ -195,12 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
 //******************BG AVENTURA
 
 const backgrounds = {
-    "Novato 1": "url('bosque_mistico.jpg')", // Inspirado en el sur de Chile
-    "Novato 2": "url('salon_baile.jpg')",
-    "Novato 3": "linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('laboratorio.jpg')",
-    "Intermedio 4": "url('sala_espejos.jpg')",
-    "Intermedio 5": "url('laberinto_niebla.jpg')",
-    "Intermedio 6": "url('cueva_dragon.jpg')"
+    "Novato 1": "url('img/bosque.jpg')",
+    "Novato 2": "url('img/baile.jpg')",
+    "Novato 3": "url('img/alquimia.jpg')",
+    "Intermedio 4": "url('img/espejos.jpg')",
+    "Intermedio 5": "url('img/laberinto.jpg')",
+    "Intermedio 6": "url('img/boda.jpg')"
 };
 
 function updateAdventureVisuals() {
@@ -314,7 +346,7 @@ function newGame() {
     const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
-    
+
     if (musica) {
         musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
         musica.play().catch(error => {
@@ -365,10 +397,10 @@ function agregarMensajeEspecial(texto, tipo) {
 function ajustarVolumen(valor) {
     const musica = document.getElementById('musica-ambiental');
     const dados = document.getElementById('audio-dados');
-    
+
     if (musica) musica.volume = valor;
     if (dados) dados.volume = valor;
-    
+
     // Cambiar el icono si llega a 0
     const btn = document.getElementById('btn-mute');
     btn.innerText = valor == 0 ? "🔇" : "🔊";
@@ -377,7 +409,7 @@ function ajustarVolumen(valor) {
 function toggleMute() {
     const musica = document.getElementById('musica-ambiental');
     const slider = document.getElementById('volumen-slider');
-    
+
     if (musica.muted) {
         musica.muted = false;
         document.getElementById('btn-mute').innerText = "🔊";
