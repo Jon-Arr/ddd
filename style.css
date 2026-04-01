@@ -8,27 +8,36 @@ body {
 
 .menu-overlay {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: flex; justify-content: center; align-items: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 1000;
 }
+
 .menu-content {
-    background: #fff8dc; border: 5px double #8b4513;
-    padding: 40px; text-align: center; border-radius: 20px;
+    background: #fff8dc;
+    border: 5px double #8b4513;
+    padding: 40px;
+    text-align: center;
+    border-radius: 20px;
 }
 
 .game-container {
-    display: flex; 
-    gap: 20px; 
-    padding: 20px; 
+    display: flex;
+    gap: 20px;
+    padding: 20px;
     font-family: 'Georgia', serif;
 }
 
 .card {
-    margin-bottom: 20px; 
-    border: 1px solid #4b0082; 
-    padding: 10px; 
+    margin-bottom: 20px;
+    border: 1px solid #4b0082;
+    padding: 10px;
     background: #e6e6fa;
 }
 
@@ -56,7 +65,9 @@ body {
     z-index: 10;
 }
 
-.dice-panel, .game-container, main {
+.dice-panel,
+.game-container,
+main {
     /* background: #fff8dc; */
     border: 3px solid #8b4513;
     border-radius: 15px;
@@ -67,53 +78,56 @@ body {
     text-align: center;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
 
-    background: rgba(255, 248, 220, 0.9) !important; /* Fondo crema con 90% de opacidad */
-    backdrop-filter: blur(5px); /* Opcional: difumina un poco el fondo detrás del panel */
+    background: rgba(255, 248, 220, 0.9) !important;
+    /* Fondo crema con 90% de opacidad */
+    backdrop-filter: blur(5px);
+    /* Opcional: difumina un poco el fondo detrás del panel */
 }
 
 .mision {
-    margin-bottom: 20px; 
-    padding: 10px; 
-    background: #e9dcc9; 
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #e9dcc9;
     border-radius: 5px;
 }
 
 label {
-    font-weight: bold; 
+    font-weight: bold;
     color: #8b4513;
 }
 
 select {
-    padding: 5px; 
-    border-radius: 5px; 
+    padding: 5px;
+    border-radius: 5px;
     border: 1px solid #8b4513;
 }
 
-#deck, #card-display {
-    width: 210px; 
-    height: 280px; 
-    border: 3px solid #8b4513; 
-    margin: 20px auto; 
-    padding: 10px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    background: #d2b48c; 
-    cursor: pointer; 
-    border-radius: 10px; 
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+#deck,
+#card-display {
+    width: 210px;
+    height: 280px;
+    border: 3px solid #8b4513;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #d2b48c;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s;
 }
 
 #deck-text {
-    font-weight: bold; 
+    font-weight: bold;
     color: #5d2e0a;
 }
 
 #card-display {
-    display: none; 
+    display: none;
     animation: ease-in 0.5s;
-    background: #f3e0c6; 
+    background: #f3e0c6;
     /* margin: 10px; 
     width: 210px; 
     height: 280px; 
@@ -122,36 +136,36 @@ select {
 }
 
 #event-type {
-    margin: 0; 
-    color: #a0522d; 
-    text-transform: uppercase; 
+    margin: 0;
+    color: #a0522d;
+    text-transform: uppercase;
     font-size: 0.8em;
 }
 
 #event-title {
-    margin: 10px 0;    
+    margin: 10px 0;
 }
 
 #event-desc {
-    font-style: italic;    
+    font-style: italic;
 }
 
 #card-display button {
-    background: transparent; 
-    border: 1px solid #8b4513; 
-    color: #8b4513; 
-    padding: 5px 10px; 
-    cursor: pointer; 
-    border-radius: 5px;    
+    background: transparent;
+    border: 1px solid #8b4513;
+    color: #8b4513;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 #chat-output {
-    height: 150px; 
-    overflow-y: scroll; 
-    border-top: 1px solid #ccc; 
-    padding: 10px; 
-    text-align: left; 
-    font-size: 0.9em; 
+    height: 150px;
+    overflow-y: scroll;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9em;
     margin-top: 20px;
 }
 
@@ -236,4 +250,77 @@ button:active {
 #chat-output div {
     padding: 8px;
     border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+
+/* --- ADAPTACIÓN PARA MÓVILES (Media Query) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        /* Menos espacio en los bordes */
+    }
+
+    .game-container {
+        flex-direction: column;
+        /* Los paneles se apilan verticalmente */
+        gap: 15px;
+    }
+
+    aside,
+    main {
+        width: 100%;
+        /* Ocupan todo el ancho del celular */
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Ajuste de botones para que sean fáciles de tocar con el dedo */
+    button {
+        min-height: 44px;
+        font-size: 16px;
+    }
+
+    .skill-buttons button {
+        width: 100%;
+        /* Botones de habilidades a lo ancho */
+    }
+
+    #chat-output {
+        height: 250px;
+        /* Un poco más de altura para leer mejor la historia */
+    }
+
+    .result-display {
+        width: 70px;
+        height: 70px;
+        font-size: 2.5rem;
+    }
+
+    .menu-content {
+        width: 90%;
+        /* Ocupa casi todo el ancho */
+        padding: 20px;
+        border-width: 3px;
+        /* Bordes un poco más finos */
+    }
+
+    .menu-content h1 {
+        font-size: 1.5rem;
+        /* Título más pequeño para que no se corte */
+        margin-bottom: 20px;
+    }
+
+    .menu-content button {
+        width: 100%;
+        /* Botones grandes y fáciles de tocar */
+        margin: 10px 0;
+        padding: 15px;
+    }
+
+    .mission-selector-menu select {
+        width: 100%;
+        font-size: 16px;
+        /* Evita que el iPhone haga zoom automático al seleccionar */
+        padding: 10px;
+    }
 }
