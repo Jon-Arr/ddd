@@ -129,8 +129,19 @@ function hideInfo(el) { el.querySelector('.tooltip').style.display = 'none'; }
 
 //****************** IA LOGICA (Configurada con el Prompt Maestro)
 async function hablarConNarrador(mensajeUsuario) {
-    // RECUERDA: Genera tu API KEY en Google AI Studio. La que pusiste parece ser un ejemplo.
-    const API_KEY = "AIzaSyCa8TV83KgDL9l50C3fOicmKDDGO5gU4dE"; 
+    // 1. Intentar obtener la clave guardada en el navegador
+    let API_KEY = localStorage.getItem('gemini_api_key');
+
+    // 2. Si no existe, pedirla al usuario
+    if (!API_KEY) {
+        API_KEY = prompt("Por favor, ingresa tu API KEY de Gemini para jugar (solo se pedirá una vez):");
+        if (API_KEY) {
+            localStorage.setItem('gemini_api_key', API_KEY);
+        } else {
+            alert("Necesitas una API KEY para que el Narrador pueda responder.");
+            return;
+        }
+    }
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. ";
