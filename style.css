@@ -116,19 +116,37 @@ button, select, label, .result-display {
     cursor: pointer;
 }
 
+.info-icon:hover .tooltip {
+    display: none; 
+}
+
 .tooltip {
     display: none;
     position: absolute;
-    bottom: 120%;
+    bottom: 125%; /* Un poco más arriba del icono */
     left: 50%;
     transform: translateX(-50%);
-    background: rgb(88, 161, 55);
+    background: rgba(60, 120, 40, 0.95); /* Un verde bosque más profundo */
     color: white;
-    padding: 5px 8px;
-    border-radius: 5px;
-    font-size: 1em;
-    white-space: nowrap;
-    z-index: 10;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    width: 220px; /* Ancho fijo para que el texto no se estire al infinito */
+    white-space: normal; /* Permite que el texto salte de línea */
+    z-index: 9999; /* El número más alto para que pase sobre el 'main' */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    border: 1px solid #d4af37; /* Un toque dorado para que resalte */
+    pointer-events: none; /* Para que no interfiera con otros clics */
+}
+
+.tooltip.active {
+    display: block !important;
+    animation: fadeInTooltip 0.3s ease-out;
+}
+
+@keyframes fadeInTooltip {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 .dice-panel,
