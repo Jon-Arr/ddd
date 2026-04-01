@@ -8,6 +8,47 @@ body {
     line-height: 1.6; /* Mejora la lectura en móviles */
 }
 
+.audio-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000; /* Para que esté por encima de todo */
+    background: rgba(255, 248, 220, 0.8);
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid #8b4513;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(5px);
+}
+
+#volumen-slider {
+    width: 80px;
+    accent-color: #8b4513;
+    cursor: pointer;
+}
+
+#btn-mute {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    padding: 0;
+    color: #8b4513;
+}
+
+/* Ajuste para que en móvil no estorbe tanto */
+@media (max-width: 768px) {
+    .audio-controls {
+        top: 10px;
+        right: 10px;
+        padding: 5px;
+    }
+    #volumen-slider {
+        width: 60px;
+    }
+}
+
 h1, h2, h3, .menu-content h1 {
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;

@@ -358,3 +358,31 @@ function agregarMensajeEspecial(texto, tipo) {
 
 // Ejemplo de uso al sacar un 20:
 // agregarMensajeEspecial("¡CRÍTICO! El Caballero asesta un golpe devastador.", "victoria");
+
+
+//******************* MUSICA
+
+function ajustarVolumen(valor) {
+    const musica = document.getElementById('musica-ambiental');
+    const dados = document.getElementById('audio-dados');
+    
+    if (musica) musica.volume = valor;
+    if (dados) dados.volume = valor;
+    
+    // Cambiar el icono si llega a 0
+    const btn = document.getElementById('btn-mute');
+    btn.innerText = valor == 0 ? "🔇" : "🔊";
+}
+
+function toggleMute() {
+    const musica = document.getElementById('musica-ambiental');
+    const slider = document.getElementById('volumen-slider');
+    
+    if (musica.muted) {
+        musica.muted = false;
+        document.getElementById('btn-mute').innerText = "🔊";
+    } else {
+        musica.muted = true;
+        document.getElementById('btn-mute').innerText = "🔇";
+    }
+}
