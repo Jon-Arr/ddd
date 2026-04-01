@@ -421,6 +421,13 @@ button:active {
         display: block; /* Cambiamos flex a block para evitar estiramientos raros */
     }
 
+    .tooltip {
+        width: 180px; /* Más estrecho para pantallas pequeñas */
+        left: 0; 
+        transform: none; /* Quitamos el centrado para que no se salga a la izquierda */
+        bottom: 110%;
+    }
+
     .game-container {
         display: flex !important;
         flex-direction: column !important; /* Fuerza la columna */
