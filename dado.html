@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lanzador de Dados - D&D Duet</title>
+    <style>
+        body { background-color: #f4ece1; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; padding: 50px; }
+        .dice-panel { background: #fff8dc; border: 3px solid #8b4513; border-radius: 15px; padding: 25px; width: 300px; text-align: center; box-shadow: 5px 5px 15px rgba(0,0,0,0.2); }
+        .result-display { font-size: 4rem; font-weight: bold; color: #8b4513; margin: 20px 0; height: 80px; display: flex; align-items: center; justify-content: center; border: 2px inset #d2b48c; background: white; border-radius: 10px; }
+        .button-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        button { background: #8b4513; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: transform 0.1s; }
+        button:hover { background: #a0522d; }
+        button:active { transform: scale(0.95); }
+        .critical { color: #d4af37; text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); animation: shake 0.5s; }
+        @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 50% { transform: rotate(-5deg); } 100% { transform: rotate(0deg); } }
+    </style>
+</head>
+<body>
+
+<div class="dice-panel">
+    <h3>Tirar los Dados</h3>
+    <div id="result" class="result-display">--</div>
+    <p id="dice-type" style="color: #666; font-style: italic;">Selecciona un dado</p>
+    
+    <div class="button-grid">
+        <button onclick="rollDice(4)">d4</button>
+        <button onclick="rollDice(6)">d6</button>
+        <button onclick="rollDice(8)">d8</button>
+        <button onclick="rollDice(10)">d10</button>
+        <button onclick="rollDice(12)">d12</button>
+        <button onclick="rollDice(20)" style="background: #d4af37; color: #000;">d20</button>
+    </div>
+</div>
+
+<script>
+    function rollDice(sides) {
+        const resultElement = document.getElementById('result');
+        const typeElement = document.getElementById('dice-type');
+        
+        // Efecto de "rodando" rápido
+        let counter = 0;
+        const interval = setInterval(() => {
+            resultElement.innerText = Math.floor(Math.random() * sides) + 1;
+            counter++;
+            if (counter > 10) {
+                clearInterval(interval);
+                const finalRoll = Math.floor(Math.random() * sides) + 1;
+                resultElement.innerText = finalRoll;
+                typeElement.innerText = "Lanzaste un d" + sides;
+
+                // Estilo especial para el 20 natural
+                if (sides === 20 && finalRoll === 20) {
+                    resultElement.classList.add('critical');
+                } else {
+                    resultElement.classList.remove('critical');
+                }
+            }
+        }, 50);
+    }
+</script>
+
+</body>
+</html>

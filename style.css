@@ -1,0 +1,239 @@
+body {
+    background-color: #f4ece1;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.menu-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+.menu-content {
+    background: #fff8dc; border: 5px double #8b4513;
+    padding: 40px; text-align: center; border-radius: 20px;
+}
+
+.game-container {
+    display: flex; 
+    gap: 20px; 
+    padding: 20px; 
+    font-family: 'Georgia', serif;
+}
+
+.card {
+    margin-bottom: 20px; 
+    border: 1px solid #4b0082; 
+    padding: 10px; 
+    background: #e6e6fa;
+}
+
+.skill-buttons button {
+    width: 200px;
+}
+
+.info-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.tooltip {
+    display: none;
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(88, 161, 55);
+    color: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 1em;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.dice-panel, .game-container, main {
+    /* background: #fff8dc; */
+    border: 3px solid #8b4513;
+    border-radius: 15px;
+    padding: 25px;
+    justify-content: center;
+    margin: 20px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+
+    background: rgba(255, 248, 220, 0.9) !important; /* Fondo crema con 90% de opacidad */
+    backdrop-filter: blur(5px); /* Opcional: difumina un poco el fondo detrás del panel */
+}
+
+.mision {
+    margin-bottom: 20px; 
+    padding: 10px; 
+    background: #e9dcc9; 
+    border-radius: 5px;
+}
+
+label {
+    font-weight: bold; 
+    color: #8b4513;
+}
+
+select {
+    padding: 5px; 
+    border-radius: 5px; 
+    border: 1px solid #8b4513;
+}
+
+#deck, #card-display {
+    width: 210px; 
+    height: 280px; 
+    border: 3px solid #8b4513; 
+    margin: 20px auto; 
+    padding: 10px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: #d2b48c; 
+    cursor: pointer; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+    transition: transform 0.2s;
+}
+
+#deck-text {
+    font-weight: bold; 
+    color: #5d2e0a;
+}
+
+#card-display {
+    display: none; 
+    animation: ease-in 0.5s;
+    background: #f3e0c6; 
+    /* margin: 10px; 
+    width: 210px; 
+    height: 280px; 
+    border: 2px double #8b4513; 
+    border-radius: 10px; */
+}
+
+#event-type {
+    margin: 0; 
+    color: #a0522d; 
+    text-transform: uppercase; 
+    font-size: 0.8em;
+}
+
+#event-title {
+    margin: 10px 0;    
+}
+
+#event-desc {
+    font-style: italic;    
+}
+
+#card-display button {
+    background: transparent; 
+    border: 1px solid #8b4513; 
+    color: #8b4513; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    border-radius: 5px;    
+}
+
+#chat-output {
+    height: 150px; 
+    overflow-y: scroll; 
+    border-top: 1px solid #ccc; 
+    padding: 10px; 
+    text-align: left; 
+    font-size: 0.9em; 
+    margin-top: 20px;
+}
+
+#dice-type {
+    color: #666;
+}
+
+.result-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #8b4513;
+    margin: 20px 0;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px inset #d2b48c;
+    background: white;
+    border-radius: 10px;
+    justify-self: center;
+    box-shadow: inset 2px 2px 5px rgba(96, 96, 96, 0.5);
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+button {
+    background: #8b4513;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.1s;
+}
+
+button:hover {
+    background: #a0522d;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.critical {
+    color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(5deg);
+    }
+
+    50% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Ajuste para que la caja de texto no crezca infinitamente */
+#chat-output {
+    max-height: 300px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+/* Mejora visual para los mensajes de la IA */
+#chat-output div {
+    padding: 8px;
+    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
+}
