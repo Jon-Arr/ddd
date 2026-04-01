@@ -10,6 +10,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#8b4513">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -176,6 +181,13 @@
             <button onclick="rollDice(12)">d12</button>
             <button onclick="rollDice(20)" style="background: #d4af37; color: #000;">d20</button>
         </div>
+        <div class="spotify-container">
+            <iframe data-testid="embed-iframe" style="border-radius:12px"
+                src="https://open.spotify.com/embed/playlist/7K4xucrmZ8u0CycQUHTsDD?utm_source=generator&theme=0"
+                width="100%" height="152" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+        </div>
     </aside>
 
     </div>
@@ -184,6 +196,7 @@
 
     </script>
 
+    <audio id="audio-dados" src="snd/dado1.mp3" preload="auto"></audio>
 
 
 </body>

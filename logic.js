@@ -1,9 +1,9 @@
 //****************** INTRO MISIONES
 const introMisiones = {
     "Novato 1": "El rocío de la mañana aún brilla sobre las hojas del Bosque Susurrante. La Maga y el Caballero avanzan por un sendero flanqueado por flores que emiten un suave tintineo plateado. De pronto, un gemido agudo rompe la calma: entre las raíces de un Sauce Anciano, una pequeña criatura con alas de mariposa y pelaje de nube lucha por liberarse de unas enredaderas que parecen moverse con voluntad propia.",
-    
+
     "Novato 2": "El Gran Salón del Palacio de Cristal está iluminado por mil velas flotantes. La música de los laúdes llena el aire mientras nobles enmascarados giran en el centro. Sin embargo, algo está mal: las sombras de los invitados no coinciden con sus movimientos. La Maga nota un brillo frío en las paredes, mientras el Caballero siente que su mano, entrelazada con la de su pareja, es lo único real en este salón de ilusiones.",
-    
+
     "Novato 3": "El laboratorio está saturado de un olor a fresas y azufre. Calderos de cobre burbujean con colores imposibles mientras pergaminos vuelan de un lado a otro. La Maga intenta estabilizar una mezcla que brilla con un rosa neón, pero una chispa salta hacia el Caballero. Si no logran contener la reacción mágica, todo el reino podría estallar en una carcajada eterna y caótica.",
 
     "Intermedio 4": "Están en una sala donde el suelo, el techo y las paredes son espejos perfectos. No hay salida aparente, solo infinitos reflejos de la Maga y el Caballero. Pero los reflejos empiezan a actuar de forma extraña: muestran momentos del futuro o secretos del pasado. Para avanzar, no deben confiar en lo que ven, sino en lo que sienten el uno por el otro.",
@@ -15,6 +15,15 @@ const introMisiones = {
 
 //****************** DADOS LOGICA (Conectada a la IA)
 function rollDice(sides) {
+    // 1. Obtener el elemento de audio
+    const sonido = document.getElementById('audio-dados');
+
+    // 2. Reproducir el sonido (reiniciándolo si ya estaba sonando)
+    if (sonido) {
+        sonido.currentTime = 0;
+        sonido.play().catch(error => console.log("El navegador bloqueó el audio inicial:", error));
+    }
+
     const resultElement = document.getElementById('result');
     const typeElement = document.getElementById('dice-type');
 
@@ -118,7 +127,7 @@ function logSkill(skillName) {
     const log = document.getElementById('chat-output');
     log.innerHTML += `<div style="color: #4b0082;"><strong>Acción: </strong><em>${skillName}</em>.</div>`;
     log.scrollTop = log.scrollHeight;
-    
+
     // AVISO AUTOMÁTICO A LA IA
     hablarConNarrador(`Uso la habilidad: ${skillName}.`);
 }
@@ -131,7 +140,7 @@ function hideInfo(el) { el.querySelector('.tooltip').style.display = 'none'; }
 const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
-    
+
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. ";
@@ -151,7 +160,7 @@ async function hablarConNarrador(mensajeUsuario) {
 
         const json = await respuesta.json();
         const textoIA = json.candidates[0].content.parts[0].text;
-        
+
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 5px; border-radius: 5px;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
@@ -165,7 +174,7 @@ async function hablarConNarrador(mensajeUsuario) {
 function enviarAccion() {
     const input = document.getElementById('user-input');
     const mensaje = input.value.trim();
-    
+
     if (mensaje !== "") {
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; text-align: right; color: #2e4a39;"><strong>Tú:</strong> ${mensaje}</div>`;
@@ -252,20 +261,20 @@ function saveGame() {
 // Función que se ejecuta al presionar "Cargar Partida" en el menú
 function loadGame() {
     const saved = localStorage.getItem('dd_duet_save');
-    
+
     if (saved) {
         const data = JSON.parse(saved);
-        
+
         // Restaurar valores en la interfaz
         document.getElementById('mission-select').value = data.mision;
         document.querySelector('.card:nth-child(2) input').value = data.hpMaga;
         document.querySelector('.card:nth-child(3) input').value = data.hpCaballero;
         document.getElementById('chat-output').innerHTML = data.historial;
-        
+
         // Ocultar menú y actualizar visuales
         document.getElementById('main-menu').style.display = 'none';
         updateAdventureVisuals(); // Cambia el fondo según la misión cargada
-        
+
         // Avisar al Narrador que hemos vuelto
         hablarConNarrador("He cargado una partida guardada en la misión: " + data.mision + ". Por favor, resume brevemente dónde nos quedamos.");
     } else {
@@ -278,19 +287,19 @@ function importGame(event) {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         try {
             const data = JSON.parse(e.target.result);
-            
+
             // Restauramos todo en la interfaz
             document.getElementById('mission-select').value = data.mision;
             document.querySelector('.card:nth-child(2) input').value = data.hpMaga;
             document.querySelector('.card:nth-child(3) input').value = data.hpCaballero;
             document.getElementById('chat-output').innerHTML = data.historial;
-            
+
             document.getElementById('main-menu').style.display = 'none';
             updateAdventureVisuals();
-            
+
             hablarConNarrador("He vuelto a la partida usando un registro guardado. Estamos en: " + data.mision);
         } catch (err) {
             alert("Error: El archivo no es un registro de partida válido.");
@@ -324,3 +333,20 @@ function newGame() {
     // Enviar a la IA (esto no aparecerá en el chat como texto del usuario si lo manejas bien)
     hablarConNarrador(mensajeParaIA);
 }
+
+//******************* NENSAJE ESPECIAL
+
+function agregarMensajeEspecial(texto, tipo) {
+    const chat = document.getElementById('chat-output');
+    const div = document.createElement('div');
+
+    // Aplicamos la clase según el tipo: 'victoria', 'derrota' o 'narrador'
+    div.className = `msg-${tipo}`;
+    div.innerText = texto;
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight; // Auto-scroll al final
+}
+
+// Ejemplo de uso al sacar un 20:
+// agregarMensajeEspecial("¡CRÍTICO! El Caballero asesta un golpe devastador.", "victoria");
