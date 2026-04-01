@@ -60,9 +60,10 @@ button, select, label, .result-display {
 
 .card {
     margin-bottom: 20px;
-    border: 1px solid #4b0082;
+    border: 1px solid #aabb4a;
+    border-radius: 20px;
     padding: 10px;
-    background: #e6e6fa;
+    background: #8e851e36;
 }
 
 .skill-buttons button {
@@ -124,6 +125,13 @@ select {
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #8b4513;
+    width: 100%;
+}
+
+.mision div {
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em; 
 }
 
 #deck,
@@ -362,14 +370,14 @@ button:active {
         width: 100%;
         margin: 0;
         padding: 0;
-        border: none; /* Quitamos el borde externo para ganar espacio */
+        /* border: none; */
         box-shadow: none;
-        background: transparent !important;
+        /* background: transparent !important; */
     }
 
     .dice-panel, 
     main, 
-    aside {
+    .game-container {
         width: 95% !important; /* Casi todo el ancho */
         max-width: 100%;
         margin: 10px auto !important;

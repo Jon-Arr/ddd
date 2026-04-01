@@ -136,7 +136,7 @@
                 <option value="Intermedio 6">6. La Boda del Dragón</option>
             </select>
             <div style="margin-top: 10px; text-align: right;">
-                <button onclick="saveGame()" style="background: #2e4a39; font-size: 0.8em; padding: 5px 15px;">
+                <button onclick="saveGame()">
                     💾 Guardar Progreso
                 </button>
             </div>
@@ -181,12 +181,8 @@
             <button onclick="rollDice(12)">d12</button>
             <button onclick="rollDice(20)" style="background: #d4af37; color: #000;">d20</button>
         </div>
-        <div class="spotify-container">
-            <iframe data-testid="embed-iframe" style="border-radius:12px"
-                src="https://open.spotify.com/embed/playlist/7K4xucrmZ8u0CycQUHTsDD?utm_source=generator&theme=0"
-                width="100%" height="152" frameBorder="0" allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"></iframe>
+        <div class="music-container">
+            <audio id="musica-ambiental" src="snd/bgmusic.mp3" loop preload="auto"></audio>
         </div>
     </aside>
 

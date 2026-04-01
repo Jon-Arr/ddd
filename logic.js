@@ -313,6 +313,14 @@ function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
     const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
+    const musica = document.getElementById('musica-ambiental');
+    
+    if (musica) {
+        musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
+        musica.play().catch(error => {
+            console.log("Esperando interacción para sonar:", error);
+        });
+    }
 
     // Sincronizar el selector de la interfaz principal
     document.getElementById('mission-select').value = misionID;
