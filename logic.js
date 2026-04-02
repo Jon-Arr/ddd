@@ -413,3 +413,18 @@ function toggleMute() {
         document.getElementById('btn-mute').innerText = "🔇";
     }
 }
+
+
+
+window.newGame = newGame;
+window.rollDice = rollDice; // Corregido: antes decía lanzarDados
+window.logSkill = logSkill; // Corregido: antes decía seleccionarHabilidad
+window.toggleMute = toggleMute;
+window.ajustarVolumen = ajustarVolumen;
+window.drawCard = drawCard; // Añadida para que el botón de carta funcione
+window.resetDeck = resetDeck; 
+window.enviarAccion = enviarAccion;
+window.saveGame = saveGame;
+window.loadGame = loadGame;
+window.importGame = importGame;
+window.updateAdventureVisuals = updateAdventureVisuals;
