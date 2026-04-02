@@ -177,7 +177,9 @@ async function hablarConNarrador(mensajeUsuario) {
     try {
         // Inicializamos la IA con la clave que inyecta GitHub
         const genAI = new GoogleGenerativeAI(API_KEY.trim());
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
+        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
