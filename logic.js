@@ -172,9 +172,9 @@ window.onload = () => {
 const API_KEY = "AIzaSyCNAK4PPKy4Uo8w8BRPRoS6jfTDDmlmLF0";
 
 async function hablarConNarrador(mensajeUsuario) {
-    // 1. Limpieza y URL (v1beta es la más estable para este modelo)
-    const baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-    const url = baseUrl + "?key=" + API_KEY.trim();
+    // 1. Limpieza y URL (v1beta + latest es la combinación que no falla)
+    const cleanKey = API_KEY.trim();
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${cleanKey}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. ";
 
@@ -189,19 +189,18 @@ async function hablarConNarrador(mensajeUsuario) {
             })
         });
 
-        const json = await respuesta.json();
+        const data = await respuesta.json(); // Usamos 'data' para todo el bloque
 
-        // Verificamos paso a paso que la respuesta exista
-        if (json && json.candidates && json.candidates[0] && json.candidates[0].content) {
-            const textoIA = json.candidates[0].content.parts[0].text;
+        // 2. Verificación de seguridad para evitar el error 'reading 0'
+        if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+            const textoIA = data.candidates[0].content.parts[0].text;
 
             const log = document.getElementById('chat-output');
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         } else {
-            // Si llegamos aquí, imprimimos el error real de Google para saber qué pasó
-            console.error("Detalle del error de Google:", json);
-            throw new Error("Respuesta incompleta de la IA");
+            // Si hay un error, lo vemos detallado en la consola
+            console.error("Detalle del error de Google:", data);
         }
 
     } catch (error) {
