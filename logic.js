@@ -1,3 +1,5 @@
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+
 //****************** INTRO MISIONES
 const introMisiones = {
     "Novato 1": "El rocío de la mañana aún brilla sobre las hojas del Bosque Susurrante. La Maga y el Caballero avanzan por un sendero flanqueado por flores que emiten un suave tintineo plateado. De pronto, un gemido agudo rompe la calma: entre las raíces de un Sauce Anciano, una pequeña criatura con alas de mariposa y pelaje de nube lucha por liberarse de unas enredaderas que parecen moverse con voluntad propia.",
@@ -172,38 +174,28 @@ window.onload = () => {
 const API_KEY = "AIzaSyCNAK4PPKy4Uo8w8BRPRoS6jfTDDmlmLF0";
 
 async function hablarConNarrador(mensajeUsuario) {
-    const cleanKey = API_KEY.trim();
-    const googleUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${cleanKey}`;
-    
-    // Usamos un proxy para saltar bloqueos del navegador
-    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(googleUrl);
-
-    const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia.";
-
     try {
-        // Al usar AllOrigins, la petición cambia a GET pero el contenido va dentro
-        const respuesta = await fetch(proxyUrl, {
-            method: 'POST', // Algunos proxies requieren POST, otros GET
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: promptSistema + mensajeUsuario }]
-                }]
-            })
-        });
+        // 1. Inicializar la IA con tu clave
+        const genAI = new GoogleGenerativeAI(API_KEY.trim());
+        
+        // 2. Configurar el modelo (usando el nombre que Google garantiza hoy)
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-        const wrapper = await respuesta.json();
-        // AllOrigins devuelve la respuesta de Google dentro de una propiedad llamada 'contents'
-        const data = JSON.parse(wrapper.contents); 
+        const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        if (data.candidates && data.candidates[0]) {
-            const textoIA = data.candidates[0].content.parts[0].text;
-            const log = document.getElementById('chat-output');
-            log.innerHTML += `<div class="msg-narrador"><strong>Narrador:</strong> ${textoIA}</div>`;
-            log.scrollTop = log.scrollHeight;
-        }
+        // 3. Generar el contenido
+        const result = await model.generateContent(promptSistema + mensajeUsuario);
+        const response = await result.response;
+        const textoIA = response.text();
+
+        // 4. Mostrar en el chat
+        const log = document.getElementById('chat-output');
+        log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
+        log.scrollTop = log.scrollHeight;
+
     } catch (error) {
-        console.error("Error con el Proxy:", error);
+        console.error("Error con la librería oficial:", error);
+        // Si sale un error de 'import', es que necesitamos un pequeño ajuste en el HTML
     }
 }
 
