@@ -403,8 +403,6 @@ function ajustarVolumen(valor) {
 
 function toggleMute() {
     const musica = document.getElementById('musica-ambiental');
-    const slider = document.getElementById('volumen-slider');
-
     if (musica.muted) {
         musica.muted = false;
         document.getElementById('btn-mute').innerText = "🔊";
@@ -415,16 +413,14 @@ function toggleMute() {
 }
 
 
-
 window.newGame = newGame;
-window.rollDice = rollDice; // Corregido: antes decía lanzarDados
-window.logSkill = logSkill; // Corregido: antes decía seleccionarHabilidad
+window.rollDice = rollDice; 
+window.logSkill = logSkill;
+window.drawCard = drawCard;
+window.resetDeck = resetDeck;
+window.enviarAccion = enviarAccion;
 window.toggleMute = toggleMute;
 window.ajustarVolumen = ajustarVolumen;
-window.drawCard = drawCard; // Añadida para que el botón de carta funcione
-window.resetDeck = resetDeck; 
-window.enviarAccion = enviarAccion;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
 window.importGame = importGame;
-window.updateAdventureVisuals = updateAdventureVisuals;
