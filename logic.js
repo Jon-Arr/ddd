@@ -175,27 +175,25 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
     try {
-        // 1. Inicializar la IA con tu clave
+        // Inicializamos la IA con la clave que inyecta GitHub
         const genAI = new GoogleGenerativeAI(API_KEY.trim());
-        
-        // 2. Configurar el modelo (usando el nombre que Google garantiza hoy)
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        // 3. Generar el contenido
+        // Generamos el contenido directamente
         const result = await model.generateContent(promptSistema + mensajeUsuario);
         const response = await result.response;
         const textoIA = response.text();
 
-        // 4. Mostrar en el chat
+        // Lo mostramos en tu chat
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
 
     } catch (error) {
         console.error("Error con la librería oficial:", error);
-        // Si sale un error de 'import', es que necesitamos un pequeño ajuste en el HTML
+        // Si sale un error aquí, es probable que la API KEY sea inválida o esté restringida
     }
 }
 
