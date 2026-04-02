@@ -173,22 +173,27 @@ const API_KEY = "AIzaSyCNAK4PPKy4Uo8w8BRPRoS6jfTDDmlmLF0";
 
 async function hablarConNarrador(mensajeUsuario) {
 
-    // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    // const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. ";
 
-    const datos = {
-        contents: [{
-            parts: [{ text: promptSistema + mensajeUsuario }]
-        }]
-    };
+    // const datos = {
+    //     contents: [{
+    //         parts: [{ text: promptSistema + mensajeUsuario }]
+    //     }]
+    // };
 
     try {
         const respuesta = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datos)
+            // body: JSON.stringify(datos)
+            body: JSON.stringify({
+        contents: [{
+            parts: [{ text: promptSistema + mensajeUsuario }] // Asegúrate de que diga 'parts' y 'text'
+        }]
+    })
         });
 
         const json = await respuesta.json();
