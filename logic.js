@@ -193,6 +193,13 @@ async function hablarConNarrador(mensajeUsuario) {
         const json = await respuesta.json();
         const textoIA = json.candidates[0].content.parts[0].text;
 
+        if (data.candidates && data.candidates[0]) {
+            const textoIA = data.candidates[0].content.parts[0].text;
+            // ... mostrar en el chat
+        } else {
+            console.error("La IA no devolvió una respuesta válida:", data);
+        }
+
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 5px; border-radius: 5px;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
@@ -227,8 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
 //******************BG AVENTURA
 
 const backgrounds = {
-    "Novato 1": "url('img/bosque.jpg')",
-    "Novato 2": "url('img/baile.jpg')",
+    "Novato 1": "url('img/bosque.webp')",
+    "Novato 2": "url('img/baile.webp')",
     "Novato 3": "url('img/alquimia.jpg')",
     "Intermedio 4": "url('img/espejos.jpg')",
     "Intermedio 5": "url('img/laberinto.jpg')",
@@ -241,8 +248,8 @@ function updateAdventureVisuals() {
 
     // Diccionario de imágenes según la misión
     const imagenesFondo = {
-        "Novato 1": "url('img/bosque.jpg')",
-        "Novato 2": "url('img/baile.jpg')",
+        "Novato 1": "url('img/bosque.webp')",
+        "Novato 2": "url('img/baile.webp')",
         "Novato 3": "url('img/alquimia.jpg')",
         "Intermedio 4": "url('img/espejos.jpg')",
         "Intermedio 5": "url('img/laberinto.jpg')",
