@@ -172,7 +172,7 @@ window.onload = () => {
 const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
-    // 1. Limpieza y URL robusta
+    // 1. Limpieza y URL (v1beta es la más estable para este modelo)
     const cleanKey = API_KEY.trim();
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cleanKey}`;
 
@@ -189,9 +189,9 @@ async function hablarConNarrador(mensajeUsuario) {
             })
         });
 
-        const data = await respuesta.json(); // Usamos 'data' en todo el bloque
+        const data = await respuesta.json(); // Definimos 'data' aquí
 
-        // 2. Verificación de seguridad para evitar "reading 0"
+        // 2. Verificación de seguridad para evitar el error de "reading 0"
         if (data.candidates && data.candidates[0] && data.candidates[0].content) {
             const textoIA = data.candidates[0].content.parts[0].text;
             
@@ -199,11 +199,12 @@ async function hablarConNarrador(mensajeUsuario) {
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         } else {
-            console.error("Respuesta inesperada de Google:", data);
+            // Si Google responde pero con un error (como el 404 que ves)
+            console.error("Respuesta de error de Google:", data);
         }
 
     } catch (error) {
-        console.error("Error en la petición:", error);
+        console.error("Error de conexión:", error);
     }
 }
 
