@@ -174,7 +174,7 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 async function hablarConNarrador(mensajeUsuario) {
     // 1. URL EXACTA para Gemini 1.5 Flash (v1beta es la necesaria para este modelo específico)
     const cleanKey = API_KEY.trim();
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${cleanKey}`;
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" + cleanKey;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero en un mundo de D&D. Mezcla romance, misterio y comedia. Sé breve pero descriptivo. ";
 
@@ -191,16 +191,15 @@ async function hablarConNarrador(mensajeUsuario) {
 
         const data = await respuesta.json();
 
-        // 2. Verificación de éxito de la respuesta
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        // Solo intentamos leer si la respuesta fue exitosa (trae candidates)
+        if (data && data.candidates && data.candidates[0]) {
             const textoIA = data.candidates[0].content.parts[0].text;
-            
             const log = document.getElementById('chat-output');
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         } else {
-            // Esto imprimirá el "Object" en la consola. ¡Haz clic en él para ver el error real!
-            console.error("Google rechazó la petición. Detalles:", data);
+            // Si hay un error, lo mostramos limpio en la consola para investigar
+            console.error("Error detallado de Google:", data);
         }
 
     } catch (error) {
