@@ -191,17 +191,23 @@ async function hablarConNarrador(mensajeUsuario) {
 
         const json = await respuesta.json();
 
-        // 2. Verificación de seguridad: ¿Google nos respondió correctamente?
-        if (json.candidates && json.candidates[0] && json.candidates[0].content) {
+        // if (json.candidates && json.candidates[0] && json.candidates[0].content) {
+        //     const textoIA = json.candidates[0].content.parts[0].text;
+        //     const log = document.getElementById('chat-output');
+        //     log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
+        //     log.scrollTop = log.scrollHeight;
+        // } else {
+        //     console.error("Respuesta inesperada de Google:", json);
+        //     throw new Error("La IA no pudo generar una respuesta.");
+        // }
+
+        if (json.candidates && json.candidates.length > 0) {
             const textoIA = json.candidates[0].content.parts[0].text;
-            
-            // 3. Mostrar en el chat (Solo una vez)
             const log = document.getElementById('chat-output');
-            log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
+            log.innerHTML += `<div class="msg-narrador"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         } else {
-            console.error("Respuesta inesperada de Google:", json);
-            throw new Error("La IA no pudo generar una respuesta.");
+            console.error("Respuesta vacía de la IA:", json);
         }
 
     } catch (error) {
