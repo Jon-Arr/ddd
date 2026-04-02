@@ -172,12 +172,9 @@ window.onload = () => {
 const API_KEY = "AIzaSyCNAK4PPKy4Uo8w8BRPRoS6jfTDDmlmLF0";
 
 async function hablarConNarrador(mensajeUsuario) {
-    // 1. Limpieza total de la API KEY para evitar espacios invisibles
-    // const cleanKey = API_KEY.trim();
-    // const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cleanKey}`;
-    // const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${cleanKey}`;
-    const baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
-    const url = baseUrl + "?key=" + API_KEY.trim();
+    // 1. Limpieza y URL robusta
+    const cleanKey = API_KEY.trim();
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cleanKey}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. ";
 
@@ -192,31 +189,21 @@ async function hablarConNarrador(mensajeUsuario) {
             })
         });
 
-        const json = await respuesta.json();
+        const data = await respuesta.json(); // Usamos 'data' en todo el bloque
 
-        // if (json.candidates && json.candidates[0] && json.candidates[0].content) {
-        //     const textoIA = json.candidates[0].content.parts[0].text;
-        //     const log = document.getElementById('chat-output');
-        //     log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
-        //     log.scrollTop = log.scrollHeight;
-        // } else {
-        //     console.error("Respuesta inesperada de Google:", json);
-        //     throw new Error("La IA no pudo generar una respuesta.");
-        // }
-
-        if (json.candidates && json.candidates.length > 0) {
-            const textoIA = json.candidates[0].content.parts[0].text;
+        // 2. Verificación de seguridad para evitar "reading 0"
+        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+            const textoIA = data.candidates[0].content.parts[0].text;
+            
             const log = document.getElementById('chat-output');
-            log.innerHTML += `<div class="msg-narrador"><strong>Narrador:</strong> ${textoIA}</div>`;
+            log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         } else {
-            console.error("Respuesta vacía de la IA:", json);
+            console.error("Respuesta inesperada de Google:", data);
         }
 
     } catch (error) {
-        console.error("Error en la comunicación:", error);
-        const log = document.getElementById('chat-output');
-        log.innerHTML += `<div style="color:red; font-size: 0.8rem;">[Error: El narrador se ha quedado sin voz. Revisa tu conexión o API Key]</div>`;
+        console.error("Error en la petición:", error);
     }
 }
 
