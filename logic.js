@@ -430,3 +430,15 @@ function toggleMute() {
     }
 }
 
+
+window.newGame = newGame;
+window.rollDice = rollDice; 
+window.logSkill = logSkill;
+window.drawCard = drawCard;
+window.resetDeck = resetDeck;
+window.enviarAccion = enviarAccion;
+window.toggleMute = toggleMute;
+window.ajustarVolumen = ajustarVolumen;
+window.saveGame = saveGame;
+window.loadGame = loadGame;
+window.importGame = importGame;
