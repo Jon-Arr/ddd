@@ -171,11 +171,13 @@ window.onload = () => {
 //****************** IA LOGICA (Configurada con el Prompt Maestro)
 const API_KEY = "REPLACE_WITH_API_KEY";
 
-async function hablarConNarrador(mensajeUsuario) {
+// Definimos la función de forma global directamente
+window.hablarConNarrador = async function(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // URL limpia para la versión v1beta (que es la que suele estar activa en Chile)
-    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + API_KEY.trim();
+    // Probamos con la URL v1 (Estable) que es la que menos falla
+    const urlBase = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+    const urlFinal = urlBase + '?key=' + API_KEY.trim();
 
     const payload = {
         contents: [{
@@ -184,7 +186,7 @@ async function hablarConNarrador(mensajeUsuario) {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(urlFinal, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -193,7 +195,8 @@ async function hablarConNarrador(mensajeUsuario) {
         const data = await response.json();
 
         if (data.error) {
-            console.error('Error Google:', data.error.message);
+            console.error('Google dice:', data.error.message);
+            log.innerHTML += '<div style="color:orange;">Error: ' + data.error.message + '</div>';
             return;
         }
 
@@ -202,10 +205,10 @@ async function hablarConNarrador(mensajeUsuario) {
             log.innerHTML += '<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ' + textoIA + '</div>';
             log.scrollTop = log.scrollHeight;
         }
-    } catch (e) {
-        console.error('Error Red:', e);
+    } catch (error) {
+        console.error('Fallo de red:', error);
     }
-}
+};
 
 // ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AL FINAL DEL ARCHIVO
 window.hablarConNarrador = hablarConNarrador;
