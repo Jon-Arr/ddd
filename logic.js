@@ -177,7 +177,7 @@ window.hablarConNarrador = async function (mensajeUsuario) {
 
     // Probamos con la URL v1 (Estable) que es la que menos falla
     // CAMBIO: v1 por v1beta y aseguramos la ruta completa
-    const urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    const urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
     const urlFinal = urlBase + '?key=' + API_KEY.trim();
 
     const payload = {
