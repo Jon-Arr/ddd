@@ -1,6 +1,6 @@
-// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 // import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.14.0";
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.1.1";
+// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.1.1";
 
 //****************** INTRO MISIONES
 const introMisiones = {
@@ -179,29 +179,27 @@ async function hablarConNarrador(mensajeUsuario) {
     try {
         const genAI = new GoogleGenerativeAI(API_KEY.trim());
         
-        // 1. Usamos el nombre del modelo tal cual aparece en tu lista de la derecha (image_14e344.png)
-        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-flash" });
+        // 1. Usamos el modelo ESTABLE (Sin 'v1beta' en la ruta interna)
+        // La librería detectará automáticamente si debe usar v1 o v1beta
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash",
+        });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        // 2. Llamada directa simplificada
+        // 2. Usamos el método de generación más simple posible
         const result = await model.generateContent(promptSistema + " " + mensajeUsuario);
         const response = await result.response;
         const textoIA = response.text();
 
-        // 3. Mostrar en el chat
+        // 3. Inyectar en el chat
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
 
     } catch (error) {
-        // Si sale 404 aquí, es que la librería esm.run está desactualizada
-        console.error("Error detallado:", error);
-        
-        // PLAN DE EMERGENCIA: Si falla, avisamos en el chat
-        const log = document.getElementById('chat-output');
-        log.innerHTML += `<div style="color:red;">Error de conexión con el DM. Revisa la consola.</div>`;
+        console.error("Error en la llamada:", error);
+        // Si el error 404 persiste aquí, es un tema de la librería esm.run
     }
 }
 
