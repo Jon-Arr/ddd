@@ -174,24 +174,21 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // 1. Definimos las partes por separado para evitar errores de pegado
-    const protocolo = "https://";
-    const host = "generativelanguage.googleapis.com";
-    const ruta = "/v1beta/models/gemini-1.5-flash:generateContent";
-    const keyParam = "?key=" + API_KEY.trim();
+    // Construcción manual de URL para evitar que el navegador piense que es una búsqueda
+    var urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+    var miClave = API_KEY.trim();
+    var urlFinal = urlBase + '?key=' + miClave;
 
-    const finalUrl = protocolo + host + ruta + keyParam;
+    var promptSistema = 'Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.';
 
-    const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
-
-    const payload = {
+    var payload = {
         contents: [{
-            parts: [{ text: promptSistema + " " + mensajeUsuario }]
+            parts: [{ text: promptSistema + ' ' + mensajeUsuario }]
         }]
     };
 
     try {
-        const response = await fetch(finalUrl, {
+        const response = await fetch(urlFinal, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -200,18 +197,18 @@ async function hablarConNarrador(mensajeUsuario) {
         const data = await response.json();
 
         if (data.error) {
-            console.error("Error de Google:", data.error.message);
+            console.error('Error de Google:', data.error.message);
             return;
         }
 
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             const textoIA = data.candidates[0].content.parts[0].text;
-            log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
+            log.innerHTML += '<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ' + textoIA + '</div>';
             log.scrollTop = log.scrollHeight;
         }
 
     } catch (error) {
-        console.error("Error de red detallado:", error);
+        console.error('Error de red:', error);
     }
 }
 
