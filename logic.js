@@ -173,9 +173,11 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
-
-    // 1. Usamos la URL estable (v1) en lugar de v1beta
-    const url = `https://www.google.com/search?q=https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent%3Fkey%3D${API_KEY.trim()}`;
+    
+    // 1. Limpiamos la URL (Asegúrate de que NO tenga espacios ni caracteres raros)
+    const baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+    const apiKey = API_KEY.trim();
+    const finalUrl = `${baseUrl}?key=${apiKey}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
@@ -186,7 +188,7 @@ async function hablarConNarrador(mensajeUsuario) {
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(finalUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -194,14 +196,11 @@ async function hablarConNarrador(mensajeUsuario) {
 
         const data = await response.json();
 
-        // 2. Revisamos si Google nos dio un error en el JSON
         if (data.error) {
             console.error("Error de Google:", data.error.message);
-            log.innerHTML += `<div style="color:red;">Error: ${data.error.message}</div>`;
             return;
         }
 
-        // 3. Extraemos la respuesta
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             const textoIA = data.candidates[0].content.parts[0].text;
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
@@ -210,7 +209,6 @@ async function hablarConNarrador(mensajeUsuario) {
 
     } catch (error) {
         console.error("Error de red:", error);
-        log.innerHTML += `<div style="color:red;">Error de conexión. Revisa el internet de tu Android x86.</div>`;
     }
 }
 
