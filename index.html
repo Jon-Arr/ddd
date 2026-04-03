@@ -42,8 +42,6 @@
                     <option value="Intermedio 6">La Boda del Dragón</option>
                 </select>
             </div><br>
-            <input type="file" id="file-selector" style="display: none;" onchange="importGame(event)">
-            <button onclick="document.getElementById('file-selector').click()">📂 Cargar desde Archivo</button>
         </div>
 
     </div>
@@ -126,21 +124,15 @@
     </aside>
 
     <main>
-        <div class="mision">
-            <label for="mission-select">Elegir Misión:</label><br>
-            <select id="mission-select" onchange="resetDeck()">
-                <option value="Novato 1">1. El Rescate del Cachorro Alado</option>
-                <option value="Novato 2">2. El Baile de las Sombras Gemelas</option>
-                <option value="Novato 3">3. La Pócima de la Risa</option>
-                <option value="Intermedio 4">4. El Juicio de los Espejos</option>
-                <option value="Intermedio 5">5. El Laberinto de los Suspiros</option>
-                <option value="Intermedio 6">6. La Boda del Dragón</option>
-            </select>
-            <div style="margin-top: 10px; text-align: right;">
-                <button onclick="saveGame()">
-                    💾 Guardar Progreso
-                </button>
-            </div>
+        <nav id="game-nav"
+            style="display: flex; justify-content: space-around; background: rgba(0,0,0,0.7); padding: 10px; color: white;">
+            <button onclick="saveGame()">Guardar Partida</button>
+            <button onclick="loadGame()">Cargar Anterior</button>
+            <button onclick="irAlMenu()">Nuevo Juego / Menú</button>
+        </nav>
+
+        <div id="pantalla-juego">
+            <div id="chat-output"></div>
         </div>
         <h2 id="adventure-title">Aventura Actual</h2>
 
@@ -188,9 +180,9 @@
     </aside>
 
     </div>
-    
+
     <script type="module" src="logic.js?v=11"></script>
-    
+
     <audio id="audio-dados" src="snd/dado1.mp3" preload="auto"></audio>
 
 

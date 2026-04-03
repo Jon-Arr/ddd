@@ -413,6 +413,25 @@ function toggleMute() {
     }
 }
 
+//****************** CAMBIAR A JUEGO NUEVO
+
+window.irAlMenu = function() {
+    if (confirm("¿Seguro que quieres volver al menú? Se perderán los cambios no guardados.")) {
+        // Ocultar pantalla de juego y mostrar menú
+        document.getElementById('pantalla-juego').style.display = 'none';
+        document.getElementById('menu-inicial').style.display = 'flex';
+        document.getElementById('game-nav').style.display = 'none';
+        
+        // Opcional: Limpiar el chat para una nueva aventura
+        document.getElementById('chat-output').innerHTML = '';
+    }
+};
+
+// Asegúrate de quitar el botón de "Cargar desde archivo" en tu HTML original
+
+
+//****************** EXPORTACIÓN DE FUNCIONES
+
 
 window.newGame = newGame;
 window.rollDice = rollDice;
