@@ -172,11 +172,12 @@ window.onload = () => {
 const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 
 // Definimos la función de forma global directamente
-window.hablarConNarrador = async function(mensajeUsuario) {
+window.hablarConNarrador = async function (mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    
+
     // Probamos con la URL v1 (Estable) que es la que menos falla
-    const urlBase = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent';
+    // CAMBIO: v1 por v1beta y aseguramos la ruta completa
+    const urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
     const urlFinal = urlBase + '?key=' + API_KEY.trim();
 
     const payload = {
@@ -430,7 +431,7 @@ function toggleMute() {
 
 
 window.newGame = newGame;
-window.rollDice = rollDice; 
+window.rollDice = rollDice;
 window.logSkill = logSkill;
 window.drawCard = drawCard;
 window.resetDeck = resetDeck;
