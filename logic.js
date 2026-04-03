@@ -174,46 +174,24 @@ const API_KEY = "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";
 // Definimos la función de forma global directamente
 window.hablarConNarrador = async function(mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    const url = 'https://api.groq.com/openai/v1/chat/completions';
-
-    const payload = {
-        // ACTUALIZADO: Este es el modelo que reemplaza al anterior
-        model: "llama-3.1-8b-instant", 
-        messages: [
-            {
-                role: "system",
-                content: "Eres un Dungeon Master experto. Crea una narrativa breve para una Maga y un Caballero. Mezcla romance, accion y misterio."
-            },
-            {
-                role: "user",
-                content: mensajeUsuario
-            }
-        ],
-        temperature: 0.7
-    };
-
+    
     try {
-        const response = await fetch(url, {
+        // Ahora llamamos a nuestra propia ruta interna
+        const response = await fetch('/api/chat', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + API_KEY.trim()
-            },
-            body: JSON.stringify(payload)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ mensajeUsuario: mensajeUsuario })
         });
 
         const data = await response.json();
 
         if (data.choices && data.choices[0].message.content) {
             const textoIA = data.choices[0].message.content;
-            log.innerHTML += '<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ' + textoIA + '</div>';
+            log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
-        } else if (data.error) {
-            console.error('Error de Groq:', data.error.message);
-            log.innerHTML += '<div style="color:red;">Error: ' + data.error.message + '</div>';
         }
     } catch (error) {
-        console.error('Fallo total de red:', error);
+        console.error('Error llamando al proxy:', error);
     }
 };
 
