@@ -174,34 +174,27 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // 1. Forzamos la versión v1 (Estable) y el modelo flash con nombre completo
+    // Forzamos v1 y el modelo flash exacto que usaste en la web de Google
     const url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + API_KEY.trim();
 
-    const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
-
-    // 2. Usamos el formato de envío más básico que acepta Google
     const payload = {
         contents: [{
-            parts: [{ text: promptSistema + " " + mensajeUsuario }]
+            parts: [{ text: "Actúa como Dungeon Master breve. " + mensajeUsuario }]
         }]
     };
 
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
         const data = await response.json();
 
-        // 3. Manejo de errores detallado
         if (data.error) {
-            console.error("Error de Google:", data.error.message);
-            // Si esto falla, imprimiremos el error exacto en el chat para saber qué pasa
-            log.innerHTML += '<div style="color:red;">Error de Google: ' + data.error.message + '</div>';
+            // Si el error vuelve a aparecer en el chat, sabremos que el archivo SI se actualizó
+            log.innerHTML += '<div style="color:orange;">Respuesta de Google: ' + data.error.message + '</div>';
             return;
         }
 
@@ -212,7 +205,7 @@ async function hablarConNarrador(mensajeUsuario) {
         }
 
     } catch (error) {
-        console.error("Error de red:", error);
+        log.innerHTML += '<div style="color:red;">Error de conexión.</div>';
     }
 }
 
