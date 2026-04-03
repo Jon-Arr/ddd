@@ -174,12 +174,12 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // Forzamos v1 y el modelo flash exacto que usaste en la web de Google
-    const url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + API_KEY.trim();
+    // URL limpia para la versión v1beta (que es la que suele estar activa en Chile)
+    const url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + API_KEY.trim();
 
     const payload = {
         contents: [{
-            parts: [{ text: "Actúa como Dungeon Master breve. " + mensajeUsuario }]
+            parts: [{ text: 'Eres un Dungeon Master. ' + mensajeUsuario }]
         }]
     };
 
@@ -193,8 +193,7 @@ async function hablarConNarrador(mensajeUsuario) {
         const data = await response.json();
 
         if (data.error) {
-            // Si el error vuelve a aparecer en el chat, sabremos que el archivo SI se actualizó
-            log.innerHTML += '<div style="color:orange;">Respuesta de Google: ' + data.error.message + '</div>';
+            console.error('Error Google:', data.error.message);
             return;
         }
 
@@ -203,11 +202,13 @@ async function hablarConNarrador(mensajeUsuario) {
             log.innerHTML += '<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ' + textoIA + '</div>';
             log.scrollTop = log.scrollHeight;
         }
-
-    } catch (error) {
-        log.innerHTML += '<div style="color:red;">Error de conexión.</div>';
+    } catch (e) {
+        console.error('Error Red:', e);
     }
 }
+
+// ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AL FINAL DEL ARCHIVO
+window.hablarConNarrador = hablarConNarrador;
 
 //******************* ENVIO DE ACCION MANUAL
 function enviarAccion() {
