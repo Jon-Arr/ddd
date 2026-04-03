@@ -175,39 +175,30 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
     try {
-        const cleanKey = API_KEY.trim();
-        const genAI = new GoogleGenerativeAI(cleanKey);
-
-        // CAMBIO CRÍTICO: Usamos el nombre base sin "-latest" ni "-8b"
-        // Google garantiza que "gemini-1.5-flash" es el punto de entrada estándar.
+        const genAI = new GoogleGenerativeAI(API_KEY.trim());
+        
+        // 1. Usamos el nombre del modelo tal cual aparece en tu lista de la derecha (image_14e344.png)
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        // Usamos una estructura de llamada más robusta
-        const chat = model.startChat({
-            history: [
-                {
-                    role: "user",
-                    parts: [{ text: promptSistema }],
-                },
-                {
-                    role: "model",
-                    parts: [{ text: "Entendido, soy vuestro Dungeon Master. ¿Qué hacéis ahora?" }],
-                },
-            ],
-        });
-
-        const result = await chat.sendMessage(mensajeUsuario);
+        // 2. Llamada directa simplificada
+        const result = await model.generateContent(promptSistema + " " + mensajeUsuario);
         const response = await result.response;
         const textoIA = response.text();
 
+        // 3. Mostrar en el chat
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
 
     } catch (error) {
-        console.error("Error con la librería oficial:", error);
+        // Si sale 404 aquí, es que la librería esm.run está desactualizada
+        console.error("Error detallado:", error);
+        
+        // PLAN DE EMERGENCIA: Si falla, avisamos en el chat
+        const log = document.getElementById('chat-output');
+        log.innerHTML += `<div style="color:red;">Error de conexión con el DM. Revisa la consola.</div>`;
     }
 }
 
