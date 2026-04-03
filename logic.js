@@ -173,9 +173,9 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    
+
     // 1. Usamos la URL estable (v1) en lugar de v1beta
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY.trim()}`;
+    const url = `https://www.google.com/search?q=https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent%3Fkey%3D${API_KEY.trim()}`;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
