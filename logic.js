@@ -175,35 +175,32 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
     try {
-        // 1. Usamos la clave asegurándonos de que no tenga espacios locos
-        const cleanKey = API_KEY.trim();
-        
-        // Verificación rápida en consola (borra esto cuando funcione)
-        if (cleanKey.includes("__API") || cleanKey === "") {
-            console.error("ERROR: La API KEY no se ha inyectado desde GitHub.");
-            return;
-        }
+        const genAI = new GoogleGenerativeAI(API_KEY.trim());
 
-        const genAI = new GoogleGenerativeAI(cleanKey);
-        
-        // 2. Volvemos al modelo estándar (ahora que la URL funciona, este es el mejor)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Usamos el nombre completo del modelo y forzamos la configuración
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash-latest",
+        });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        // Generamos el contenido directamente
-        const result = await model.generateContent(promptSistema + mensajeUsuario);
+        // Añadimos una configuración de seguridad básica para evitar errores de validación
+        const result = await model.generateContent({
+            contents: [{ role: "user", parts: [{ text: promptSistema + mensajeUsuario }] }],
+            generationConfig: {
+                maxOutputTokens: 200,
+            },
+        });
+
         const response = await result.response;
         const textoIA = response.text();
 
-        // Lo mostramos en tu chat
         const log = document.getElementById('chat-output');
         log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
         log.scrollTop = log.scrollHeight;
 
     } catch (error) {
         console.error("Error con la librería oficial:", error);
-        // Si sale un error aquí, es probable que la API KEY sea inválida o esté restringida
     }
 }
 
