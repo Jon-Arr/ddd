@@ -175,23 +175,30 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 
 async function hablarConNarrador(mensajeUsuario) {
     try {
-        const genAI = new GoogleGenerativeAI(API_KEY.trim());
+        const cleanKey = API_KEY.trim();
+        const genAI = new GoogleGenerativeAI(cleanKey);
 
-        // Usamos el nombre completo del modelo y forzamos la configuración
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash-latest",
-        });
+        // CAMBIO CRÍTICO: Usamos el nombre base sin "-latest" ni "-8b"
+        // Google garantiza que "gemini-1.5-flash" es el punto de entrada estándar.
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-        // Añadimos una configuración de seguridad básica para evitar errores de validación
-        const result = await model.generateContent({
-            contents: [{ role: "user", parts: [{ text: promptSistema + mensajeUsuario }] }],
-            generationConfig: {
-                maxOutputTokens: 200,
-            },
+        // Usamos una estructura de llamada más robusta
+        const chat = model.startChat({
+            history: [
+                {
+                    role: "user",
+                    parts: [{ text: promptSistema }],
+                },
+                {
+                    role: "model",
+                    parts: [{ text: "Entendido, soy vuestro Dungeon Master. ¿Qué hacéis ahora?" }],
+                },
+            ],
         });
 
+        const result = await chat.sendMessage(mensajeUsuario);
         const response = await result.response;
         const textoIA = response.text();
 
