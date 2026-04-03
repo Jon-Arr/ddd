@@ -1,7 +1,3 @@
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.14.0";
-// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.1.1";
-
 //****************** INTRO MISIONES
 const introMisiones = {
     "Novato 1": "El rocío de la mañana aún brilla sobre las hojas del Bosque Susurrante. La Maga y el Caballero avanzan por un sendero flanqueado por flores que emiten un suave tintineo plateado. De pronto, un gemido agudo rompe la calma: entre las raíces de un Sauce Anciano, una pequeña criatura con alas de mariposa y pelaje de nube lucha por liberarse de unas enredaderas que parecen moverse con voluntad propia.",
@@ -176,30 +172,45 @@ window.onload = () => {
 const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 
 async function hablarConNarrador(mensajeUsuario) {
+    const log = document.getElementById('chat-output');
+    
+    // 1. Usamos la URL estable (v1) en lugar de v1beta
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY.trim()}`;
+
+    const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
+
+    const payload = {
+        contents: [{
+            parts: [{ text: promptSistema + " " + mensajeUsuario }]
+        }]
+    };
+
     try {
-        const genAI = new GoogleGenerativeAI(API_KEY.trim());
-        
-        // 1. Usamos el modelo ESTABLE (Sin 'v1beta' en la ruta interna)
-        // La librería detectará automáticamente si debe usar v1 o v1beta
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-1.5-flash",
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
         });
 
-        const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
+        const data = await response.json();
 
-        // 2. Usamos el método de generación más simple posible
-        const result = await model.generateContent(promptSistema + " " + mensajeUsuario);
-        const response = await result.response;
-        const textoIA = response.text();
+        // 2. Revisamos si Google nos dio un error en el JSON
+        if (data.error) {
+            console.error("Error de Google:", data.error.message);
+            log.innerHTML += `<div style="color:red;">Error: ${data.error.message}</div>`;
+            return;
+        }
 
-        // 3. Inyectar en el chat
-        const log = document.getElementById('chat-output');
-        log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
-        log.scrollTop = log.scrollHeight;
+        // 3. Extraemos la respuesta
+        if (data.candidates && data.candidates[0].content.parts[0].text) {
+            const textoIA = data.candidates[0].content.parts[0].text;
+            log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
 
     } catch (error) {
-        console.error("Error en la llamada:", error);
-        // Si el error 404 persiste aquí, es un tema de la librería esm.run
+        console.error("Error de red:", error);
+        log.innerHTML += `<div style="color:red;">Error de conexión. Revisa el internet de tu Android x86.</div>`;
     }
 }
 
