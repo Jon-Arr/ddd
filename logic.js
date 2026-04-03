@@ -174,16 +174,15 @@ const API_KEY = "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";
 // Definimos la función de forma global directamente
 window.hablarConNarrador = async function(mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    
-    // URL de Groq (Mucho más estable para peticiones desde la web)
     const url = 'https://api.groq.com/openai/v1/chat/completions';
 
     const payload = {
-        model: "llama3-8b-8192", // Un modelo rápido y potente
+        // ACTUALIZADO: Este es el modelo que reemplaza al anterior
+        model: "llama-3.1-8b-instant", 
         messages: [
             {
                 role: "system",
-                content: "Eres un Dungeon Master experto. Crea una narrativa breve para una Maga y un Caballero. Mezcla romance y misterio."
+                content: "Eres un Dungeon Master experto. Crea una narrativa breve para una Maga y un Caballero. Mezcla romance, accion y misterio."
             },
             {
                 role: "user",
@@ -198,7 +197,7 @@ window.hablarConNarrador = async function(mensajeUsuario) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + API_KEY.trim() // Tu nueva clave de Groq
+                'Authorization': 'Bearer ' + API_KEY.trim()
             },
             body: JSON.stringify(payload)
         });
@@ -211,6 +210,7 @@ window.hablarConNarrador = async function(mensajeUsuario) {
             log.scrollTop = log.scrollHeight;
         } else if (data.error) {
             console.error('Error de Groq:', data.error.message);
+            log.innerHTML += '<div style="color:red;">Error: ' + data.error.message + '</div>';
         }
     } catch (error) {
         console.error('Fallo total de red:', error);
