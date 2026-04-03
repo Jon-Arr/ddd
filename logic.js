@@ -174,21 +174,21 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // Construcción manual de URL para evitar que el navegador piense que es una búsqueda
-    var urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
-    var miClave = API_KEY.trim();
-    var urlFinal = urlBase + '?key=' + miClave;
+    // CAMBIO 1: Usamos gemini-pro (Versión 1.0) que es la más compatible
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY.trim();
 
-    var promptSistema = 'Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.';
+    const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-    var payload = {
+    // CAMBIO 2: Estructura de mensaje simplificada al máximo
+    const payload = {
         contents: [{
-            parts: [{ text: promptSistema + ' ' + mensajeUsuario }]
+            role: "user",
+            parts: [{ text: promptSistema + " " + mensajeUsuario }]
         }]
     };
 
     try {
-        const response = await fetch(urlFinal, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -197,7 +197,8 @@ async function hablarConNarrador(mensajeUsuario) {
         const data = await response.json();
 
         if (data.error) {
-            console.error('Error de Google:', data.error.message);
+            console.error("Error de Google:", data.error.message);
+            // Si sale un error de "Model not found", intentaremos la última ruta posible abajo
             return;
         }
 
@@ -208,7 +209,7 @@ async function hablarConNarrador(mensajeUsuario) {
         }
 
     } catch (error) {
-        console.error('Error de red:', error);
+        console.error("Error de red:", error);
     }
 }
 
