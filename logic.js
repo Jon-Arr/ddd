@@ -1,5 +1,6 @@
 // import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.14.0";
+// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.14.0";
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.1.1";
 
 //****************** INTRO MISIONES
 const introMisiones = {
@@ -179,7 +180,8 @@ async function hablarConNarrador(mensajeUsuario) {
         const genAI = new GoogleGenerativeAI(API_KEY.trim());
         
         // 1. Usamos el nombre del modelo tal cual aparece en tu lista de la derecha (image_14e344.png)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "models/gemini-1.5-flash" });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
