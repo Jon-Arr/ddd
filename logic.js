@@ -174,10 +174,13 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // 1. Limpiamos la URL (Asegúrate de que NO tenga espacios ni caracteres raros)
-    const baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
-    const apiKey = API_KEY.trim();
-    const finalUrl = `${baseUrl}?key=${apiKey}`;
+    // 1. Definimos las partes por separado para evitar errores de pegado
+    const protocolo = "https://";
+    const host = "generativelanguage.googleapis.com";
+    const ruta = "/v1beta/models/gemini-1.5-flash:generateContent";
+    const keyParam = "?key=" + API_KEY.trim();
+
+    const finalUrl = protocolo + host + ruta + keyParam;
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
@@ -208,7 +211,7 @@ async function hablarConNarrador(mensajeUsuario) {
         }
 
     } catch (error) {
-        console.error("Error de red:", error);
+        console.error("Error de red detallado:", error);
     }
 }
 
