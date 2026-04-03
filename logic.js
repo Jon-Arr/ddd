@@ -174,15 +174,14 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 async function hablarConNarrador(mensajeUsuario) {
     const log = document.getElementById('chat-output');
     
-    // CAMBIO 1: Usamos gemini-pro (Versión 1.0) que es la más compatible
-    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY.trim();
+    // 1. Forzamos la versión v1 (Estable) y el modelo flash con nombre completo
+    const url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + API_KEY.trim();
 
     const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
-    // CAMBIO 2: Estructura de mensaje simplificada al máximo
+    // 2. Usamos el formato de envío más básico que acepta Google
     const payload = {
         contents: [{
-            role: "user",
             parts: [{ text: promptSistema + " " + mensajeUsuario }]
         }]
     };
@@ -190,15 +189,19 @@ async function hablarConNarrador(mensajeUsuario) {
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(payload)
         });
 
         const data = await response.json();
 
+        // 3. Manejo de errores detallado
         if (data.error) {
             console.error("Error de Google:", data.error.message);
-            // Si sale un error de "Model not found", intentaremos la última ruta posible abajo
+            // Si esto falla, imprimiremos el error exacto en el chat para saber qué pasa
+            log.innerHTML += '<div style="color:red;">Error de Google: ' + data.error.message + '</div>';
             return;
         }
 
