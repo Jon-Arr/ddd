@@ -176,11 +176,12 @@ const API_KEY = "REPLACE_WITH_API_KEY";
 async function hablarConNarrador(mensajeUsuario) {
     try {
         // Inicializamos la IA con la clave que inyecta GitHub
+        // Línea 181 aprox de tu logic.js
         const genAI = new GoogleGenerativeAI(API_KEY.trim());
-        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-001" });
-        // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash",
+            // No añadimos versión manual, dejamos que la librería esm.run lo maneje
+        });
 
         const promptSistema = "Actúa como Dungeon Master para una Maga y un Caballero. Mezcla romance, misterio y comedia. Sé breve.";
 
@@ -417,7 +418,7 @@ function toggleMute() {
 
 
 window.newGame = newGame;
-window.rollDice = rollDice; 
+window.rollDice = rollDice;
 window.logSkill = logSkill;
 window.drawCard = drawCard;
 window.resetDeck = resetDeck;
