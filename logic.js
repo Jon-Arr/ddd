@@ -175,9 +175,8 @@ const API_KEY = "AIzaSyDIh-fSxfCR-OxPM0DtLHN1CUNaT49Co-Q";
 window.hablarConNarrador = async function (mensajeUsuario) {
     const log = document.getElementById('chat-output');
 
-    // Probamos con la URL v1 (Estable) que es la que menos falla
-    // CAMBIO: v1 por v1beta y aseguramos la ruta completa
-    const urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+    // Usamos v1beta pero con el nombre del modelo expandido
+    const urlBase = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
     const urlFinal = urlBase + '?key=' + API_KEY.trim();
 
     const payload = {
