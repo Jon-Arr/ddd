@@ -1,4 +1,5 @@
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai@0.14.0";
 
 //****************** INTRO MISIONES
 const introMisiones = {
