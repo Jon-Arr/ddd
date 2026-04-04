@@ -338,41 +338,35 @@ function importGame(event) {
 
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
-    // 1. Obtener la misión del menú principal
     const selectorMenu = document.getElementById('menu-mission-select');
-    if (!selectorMenu) return; // Seguridad
-    
-    const misionID = selectorMenu.value;
+    const misionID = selectorMenu.value; 
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
 
-    // 2. Control de Música
     if (musica) {
-        musica.volume = 0.5;
-        musica.play().catch(error => console.log("Audio esperando clic:", error));
+        musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
+        musica.play().catch(error => {
+            console.log("Esperando interacción para sonar:", error);
+        });
     }
 
-    // 3. CAMBIO VISUAL: Ocultar menú y mostrar el tablero de juego
+    // Sincronizar el selector de la interfaz principal
+    document.getElementById('mission-select').value = misionID;
+
+    // Cambiar visuales y ocultar menú
     document.getElementById('main-menu').style.display = 'none';
-    document.getElementById('contenedor-juego').style.display = 'flex';
-    document.getElementById('game-nav').style.display = 'flex';
+    updateAdventureVisuals();
 
-    // 4. LIMPIEZA: Vaciar el chat para la nueva historia
-    document.getElementById('chat-output').innerHTML = '';
-
-    // 5. Fondo de pantalla
-    if (typeof updateAdventureVisuals === "function") {
-        updateAdventureVisuals(misionID);
-    }
-
-    // 6. Narrativa de inicio
+    // OBTENER LA INTRODUCCIÓN AUTOMÁTICA
     const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
 
+    // CONSTRUIR EL MENSAJE PARA LA IA
     const mensajeParaIA = `SISTEMA: El usuario ha iniciado una partida nueva. 
     Misión: ${nombreVisible}. 
     Contexto inicial: ${introNarrativa} 
-    Por favor, actúa como Dungeon Master e inicia la narración.`;
+    Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
 
+    // Enviar a la IA (esto no aparecerá en el chat como texto del usuario si lo manejas bien)
     hablarConNarrador(mensajeParaIA);
 }
 
@@ -429,6 +423,8 @@ window.irAlMenu = function() {
     document.getElementById('game-nav').style.display = 'none';
     document.getElementById('menu-inicial').style.display = 'flex';
 };
+
+
 
 
 //*********************** EXPORTACIÓN DE FUNCIONES
