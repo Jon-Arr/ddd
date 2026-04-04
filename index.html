@@ -126,20 +126,34 @@
     </aside>
 
     <main>
-        <div class="mision">
-            <label for="mission-select">Elegir Misión:</label><br>
-            <select id="mission-select" onchange="resetDeck()">
-                <option value="Novato 1">1. El Rescate del Cachorro Alado</option>
-                <option value="Novato 2">2. El Baile de las Sombras Gemelas</option>
-                <option value="Novato 3">3. La Pócima de la Risa</option>
-                <option value="Intermedio 4">4. El Juicio de los Espejos</option>
-                <option value="Intermedio 5">5. El Laberinto de los Suspiros</option>
-                <option value="Intermedio 6">6. La Boda del Dragón</option>
-            </select>
-            <div style="margin-top: 10px; text-align: right;">
-                <button onclick="saveGame()">
-                    💾 Guardar Progreso
-                </button>
+        <nav id="game-nav"
+            style="display: none; justify-content: center; gap: 15px; padding: 10px; background: rgba(0,0,0,0.6); border-radius: 10px; margin-bottom: 10px;">
+            <button class="nav-btn" onclick="irAlMenu()">🏠 Menú Principal</button>
+        </nav>
+
+        <div class="game-container" id="contenedor-juego" style="display: none;">
+            <main>
+                <div id="chat-output"></div>
+            </main>
+        </div>
+
+        <div id="menu-inicial" class="menu-overlay">
+            <div class="menu-content">
+                <h1>D&D Duet</h1>
+                <div class="menu-buttons" style="display: flex; flex-direction: column; gap: 10px;">
+                    <button onclick="newGame()">⚔️ Nueva Aventura</button>
+                    <button onclick="saveGame()">💾 Guardar Partida</button>
+                    <button onclick="loadGame()">📂 Cargar Partida</button>
+                </div>
+
+                <div class="mission-selector-menu" style="margin-top: 20px;">
+                    <label>Seleccionar Destino:</label><br>
+                    <select id="menu-mission-select">
+                        <option value="Novato 1">El Rescate del Cachorro Alado</option>
+                        <option value="Novato 2">El Baile de las Sombras Gemelas</option>
+                        <option value="Novato 3">La Pócima de la Risa</option>
+                    </select>
+                </div>
             </div>
         </div>
         <h2 id="adventure-title">Aventura Actual</h2>
@@ -188,9 +202,9 @@
     </aside>
 
     </div>
-    
+
     <script type="module" src="logic.js?v=11"></script>
-    
+
     <audio id="audio-dados" src="snd/dado1.mp3" preload="auto"></audio>
 
 
