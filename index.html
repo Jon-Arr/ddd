@@ -19,11 +19,9 @@
 </head>
 
 <body>
-
     <div class="audio-controls">
         <button id="btn-mute" onclick="toggleMute()">🔊</button>
-        <input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="0.5"
-            oninput="ajustarVolumen(this.value)">
+        <input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="0.5" oninput="ajustarVolumen(this.value)">
     </div>
 
     <div id="main-menu" class="menu-overlay">
@@ -41,151 +39,57 @@
                     <option value="Intermedio 5">El Laberinto de los Suspiros</option>
                     <option value="Intermedio 6">La Boda del Dragón</option>
                 </select>
-            </div><br>
+            </div>
         </div>
-
     </div>
 
-    <div class="game-container">
-
-        <aside>
-            <h3>Héroes</h3>
-            <div class="card">
-                <strong>🧙‍♀️ Maga</strong>
-                <p>HP: <input type="number" value="15" disabled style="width: 40px;"></p>
-                <div class="skill-buttons">
-                    <div class="skill">
-                        <button onclick="logSkill('La Maga ha usado Destello de Éxtasis')">✨ Destello de
-                            Éxtasis</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> Lanza una explosión de luz rosada que ciega a los
-                                enemigos.<br><b>Mecánica:</b> Tira 1d20 + Inteligencia. Si aciertas, el enemigo falla su
-                                próximo ataque.</span>
-                        </span>
-                    </div>
-                    <div class="skill">
-                        <button onclick="logSkill('La Maga ha usado Vínculo Arcano')">🔗 Vínculo Arcano</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> Crea un hilo de energía entre ella y el
-                                Caballero.<br><b>Mecánica:</b> La Maga puede transferir hasta 5 de sus propios HP al
-                                Caballero para sanarlo instantáneamente.</span>
-                        </span>
-                    </div>
-                    <div class="skill">
-                        <button onclick="logSkill('La Maga ha usado Ojo del Destino')">👁️ Ojo del Destino</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> Sus ojos brillan permitiéndole ver rastros mágicos o
-                                intenciones ocultas.<br><b>Mecánica:</b> Suma un +5 a cualquier tirada de Investigación
-                                o Percepción.</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <strong>🛡️ Caballero</strong>
-                <p>HP: <input type="number" value="20" disabled style="width: 40px;"></p>
-                <div class="skill-buttons">
-                    <div class="skill">
-                        <button onclick="logSkill('El Caballero ha usado Estocada Galante')">⚔️ Estocada
-                            Galante</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> Un ataque preciso con su espada que debilita la
-                                armadura enemiga.<br><b>Mecánica:</b> Tira 1d20 + Fuerza. Si aciertas, haces 1d10 de
-                                daño y el próximo ataque de la Maga tiene Ventaja.</span>
-                        </span>
-                    </div>
-                    <div class="skill">
-                        <button onclick="logSkill('El Caballero ha usado Promesa de Protección')">🛡️ Promesa de
-                            Protección</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> El Caballero se interpone en el camino de un ataque
-                                dirigido a la Maga.<br><b>Mecánica:</b> Una vez por combate, el Caballero recibe el daño
-                                que iba a recibir la Maga, reduciéndolo a la mitad.</span>
-                        </span>
-                    </div>
-                    <div class="skill">
-                        <button onclick="logSkill('El Caballero ha usado Grito de Aliento')">🗣️ Grito de
-                            Aliento</button>
-                        <span class="info-icon">
-                            ℹ️
-                            <span class="tooltip"><b>Efecto:</b> Un discurso breve pero inspirador que renueva las
-                                fuerzas.<br><b>Mecánica:</b> Ambos recuperan 1d6 de HP temporal (solo se puede usar una
-                                vez por aventura).</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-    </div>
-    </aside>
-
-    <main>
-        <nav id="game-nav"
-            style="display: flex; justify-content: space-around; background: rgba(0,0,0,0.7); padding: 10px; color: white;">
-            <button onclick="saveGame()">Guardar Partida</button>
-            <button onclick="loadGame()">Cargar Anterior</button>
-            <button onclick="irAlMenu()">Nuevo Juego / Menú</button>
+    <div class="game-container" id="contenedor-juego" style="display: none;">
+        <nav id="game-nav">
+            <button onclick="saveGame()">💾 Guardar</button>
+            <button onclick="loadGame()">📂 Cargar</button>
+            <button onclick="irAlMenu()">🏠 Menú Principal</button>
         </nav>
 
-        <div id="pantalla-juego">
-            <div id="chat-output"></div>
-        </div>
-        <h2 id="adventure-title">Aventura Actual</h2>
+        <div class="layout-flex">
+            <aside class="heroes-panel">
+                <h3>Héroes</h3>
+                </aside>
 
-        <div id="deck" onclick="drawCard()">
-            <span id="deck-text">TAP PARA ROBAR EVENTO</span>
-        </div>
+            <main>
+                <div id="pantalla-juego">
+                    <div id="chat-output">Esperando al narrador...</div>
+                </div>
 
-        <div id="card-display">
-            <h4 id="event-type">
-            </h4>
-            <h3 id="event-title"></h3>
-            <p id="event-desc"></p>
-            <button onclick="resetDeck()">Reiniciar Mazo</button>
-        </div>
+                <div id="deck-container">
+                    <div id="deck" onclick="drawCard()"><span>TAP PARA ROBAR EVENTO</span></div>
+                    <div id="card-display" style="display:none;">
+                        <h4 id="event-type"></h4>
+                        <h3 id="event-title"></h3>
+                        <p id="event-desc"></p>
+                        <button onclick="resetDeck()">Reiniciar Mazo</button>
+                    </div>
+                </div>
 
-        <div id="chat-output">
-            Esperando al narrador...
-        </div>
-        <div style="display: flex; gap: 10px; padding: 10px; border-top: 2px solid #8b4513; background: #fff8dc;">
-            <input type="text" id="user-input" placeholder="Dime que sigue..."
-                style="flex: 1; padding: 10px; border: 1px solid #d2b48c; border-radius: 5px; font-family: 'serif';">
-            <button onclick="enviarAccion()"
-                style="background: #8b4513; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                Enviar
-            </button>
-        </div>
-    </main>
+                <div class="chat-input-container">
+                    <input type="text" id="user-input" placeholder="Dime qué sigue...">
+                    <button onclick="enviarAccion()">Enviar</button>
+                </div>
+            </main>
 
-    <aside class="dice-panel">
-        <h3>Tirar los Dados</h3>
-        <div id="result" class="result-display">--</div>
-        <p id="dice-type">Selecciona un dado</p>
-
-        <div class="button-grid">
-            <button onclick="rollDice(4)">d4</button>
-            <button onclick="rollDice(6)">d6</button>
-            <button onclick="rollDice(8)">d8</button>
-            <button onclick="rollDice(10)">d10</button>
-            <button onclick="rollDice(12)">d12</button>
-            <button onclick="rollDice(20)" style="background: #d4af37; color: #000;">d20</button>
+            <aside class="dice-panel">
+                <h3>Dados</h3>
+                <div id="result" class="result-display">--</div>
+                <div class="button-grid">
+                    <button onclick="rollDice(4)">d4</button>
+                    <button onclick="rollDice(20)" style="background: #d4af37;">d20</button>
+                </div>
+            </aside>
         </div>
-        <div class="music-container">
-            <audio id="musica-ambiental" src="snd/bgmusic.mp3" loop preload="auto"></audio>
-        </div>
-    </aside>
-
     </div>
 
-    <script type="module" src="logic.js?v=11"></script>
-
-    <audio id="audio-dados" src="snd/dado1.mp3" preload="auto"></audio>
-
-
+    <audio id="musica-ambiental" src="snd/bgmusic.mp3" loop></audio>
+    <audio id="audio-dados" src="snd/dado1.mp3"></audio>
+    <script type="module" src="logic.js?v=12"></script>
 </body>
 
 </html>

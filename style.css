@@ -5,14 +5,16 @@ body {
     display: flex;
     justify-content: center;
     padding: 50px;
-    line-height: 1.6; /* Mejora la lectura en móviles */
+    line-height: 1.6;
+    /* Mejora la lectura en móviles */
 }
 
 .audio-controls {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 2000; /* Para que esté por encima de todo */
+    z-index: 2000;
+    /* Para que esté por encima de todo */
     background: rgba(255, 248, 220, 0.8);
     padding: 10px;
     border-radius: 15px;
@@ -44,12 +46,16 @@ body {
         right: 10px;
         padding: 5px;
     }
+
     #volumen-slider {
         width: 60px;
     }
 }
 
-h1, h2, h3, .menu-content h1 {
+h1,
+h2,
+h3,
+.menu-content h1 {
     font-family: 'Cinzel', serif;
     letter-spacing: 2px;
     color: #5d2e0a;
@@ -64,7 +70,10 @@ h2 {
     width: 100%;
 }
 
-button, select, label, .result-display {
+button,
+select,
+label,
+.result-display {
     font-family: 'Cinzel', serif;
     font-weight: 700;
     text-transform: uppercase;
@@ -82,7 +91,7 @@ button, select, label, .result-display {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    background-image: url('img/bgmenu.jpg'); 
+    background-image: url('img/bgmenu.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -126,26 +135,33 @@ button, select, label, .result-display {
 }
 
 .info-icon:hover .tooltip {
-    display: none; 
+    display: none;
 }
 
 .tooltip {
     display: none;
     position: absolute;
-    bottom: 125%; /* Un poco más arriba del icono */
+    bottom: 125%;
+    /* Un poco más arriba del icono */
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(60, 120, 40, 0.95); /* Un verde bosque más profundo */
+    background: rgba(60, 120, 40, 0.95);
+    /* Un verde bosque más profundo */
     color: white;
     padding: 12px;
     border-radius: 8px;
     font-size: 0.9rem;
-    width: 220px; /* Ancho fijo para que el texto no se estire al infinito */
-    white-space: normal; /* Permite que el texto salte de línea */
-    z-index: 9999; /* El número más alto para que pase sobre el 'main' */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-    border: 1px solid #d4af37; /* Un toque dorado para que resalte */
-    pointer-events: none; /* Para que no interfiera con otros clics */
+    width: 220px;
+    /* Ancho fijo para que el texto no se estire al infinito */
+    white-space: normal;
+    /* Permite que el texto salte de línea */
+    z-index: 9999;
+    /* El número más alto para que pase sobre el 'main' */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid #d4af37;
+    /* Un toque dorado para que resalte */
+    pointer-events: none;
+    /* Para que no interfiera con otros clics */
 }
 
 .tooltip.active {
@@ -154,8 +170,15 @@ button, select, label, .result-display {
 }
 
 @keyframes fadeInTooltip {
-    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
 }
 
 .dice-panel,
@@ -199,7 +222,7 @@ select {
 .mision div {
     display: flex;
     justify-content: center;
-    font-size: 0.8em; 
+    font-size: 0.8em;
 }
 
 #deck,
@@ -266,21 +289,22 @@ select {
     text-align: left;
     font-size: 1.05rem;
     margin-top: 20px;
-    width: 90%;            
-    max-width: 600px;      
+    width: 90%;
+    max-width: 600px;
     margin: 0 auto;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     box-sizing: border-box;
-    
+
     /* Efecto Pergamino */
     background-color: #f2e3c9;
-    background-image: 
-        linear-gradient(to right, rgba(0,0,0,0.05) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.05) 100%),
-        url('https://www.transparenttextures.com/patterns/paper-fibers.png'); /* Textura sutil de fibra de papel */
+    background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.05) 0%, transparent 5%, transparent 95%, rgba(0, 0, 0, 0.05) 100%),
+        url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+    /* Textura sutil de fibra de papel */
     border: 2px solid #d2b48c;
     border-radius: 5px;
-    box-shadow: inset 0 0 30px rgba(139, 69, 19, 0.2), 2px 2px 5px rgba(0,0,0,0.1);
-    
+    box-shadow: inset 0 0 30px rgba(139, 69, 19, 0.2), 2px 2px 5px rgba(0, 0, 0, 0.1);
+
     /* Personalización de la barra de desplazamiento (Scroll) */
     scrollbar-width: thin;
     scrollbar-color: #8b4513 #f2e3c9;
@@ -312,7 +336,8 @@ select {
 
 /* Mensaje de Éxito / Victoria */
 .msg-victoria {
-    background: rgba(34, 139, 34, 0.1); /* Verde suave */
+    background: rgba(34, 139, 34, 0.1);
+    /* Verde suave */
     color: #1b4d1b !important;
     font-weight: bold;
     border-left: 5px solid #228b22;
@@ -322,7 +347,8 @@ select {
 
 /* Mensaje de Peligro / Derrota */
 .msg-derrota {
-    background: rgba(178, 34, 34, 0.1); /* Rojo suave */
+    background: rgba(178, 34, 34, 0.1);
+    /* Rojo suave */
     color: #800000 !important;
     font-weight: bold;
     border-left: 5px solid #b22222;
@@ -424,7 +450,7 @@ button:active {
     border: 2px solid #8b4513;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -432,19 +458,23 @@ button:active {
 @media (max-width: 768px) {
     body {
         padding: 10px;
-        display: block; /* Cambiamos flex a block para evitar estiramientos raros */
+        display: block;
+        /* Cambiamos flex a block para evitar estiramientos raros */
     }
 
     .tooltip {
-        width: 180px; /* Más estrecho para pantallas pequeñas */
-        left: 0; 
-        transform: none; /* Quitamos el centrado para que no se salga a la izquierda */
+        width: 180px;
+        /* Más estrecho para pantallas pequeñas */
+        left: 0;
+        transform: none;
+        /* Quitamos el centrado para que no se salga a la izquierda */
         bottom: 110%;
     }
 
     .game-container {
         display: flex !important;
-        flex-direction: column !important; /* Fuerza la columna */
+        flex-direction: column !important;
+        /* Fuerza la columna */
         align-items: center;
         gap: 15px;
         width: 100%;
@@ -455,10 +485,11 @@ button:active {
         /* background: transparent !important; */
     }
 
-    .dice-panel, 
-    main, 
+    .dice-panel,
+    main,
     .game-container {
-        width: 95% !important; /* Casi todo el ancho */
+        width: 95% !important;
+        /* Casi todo el ancho */
         max-width: 100%;
         margin: 10px auto !important;
         box-sizing: border-box;
@@ -478,8 +509,10 @@ button:active {
 
     /* Ajuste del Chat */
     #chat-output {
-        height: 300px; /* Más espacio para leer la historia */
-        font-size: 1rem; /* Tamaño ideal para lectura móvil */
+        height: 300px;
+        /* Más espacio para leer la historia */
+        font-size: 1rem;
+        /* Tamaño ideal para lectura móvil */
         line-height: 1.5;
     }
 
@@ -498,5 +531,23 @@ button:active {
 
     .menu-content h1 {
         font-size: 1.4rem;
+    }
+
+    .layout-flex {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100% !important;
+    }
+
+    .menu-overlay {
+        background-image: url('img/menu-bg.jpg');
+        /* Tu imagen de fondo principal */
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

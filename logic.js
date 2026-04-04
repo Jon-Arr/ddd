@@ -337,37 +337,48 @@ function importGame(event) {
 }
 
 // Función para iniciar una partida nueva desde el menú
+// CORRECCIÓN PARA NEW GAME
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
-    const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
-    const musica = document.getElementById('musica-ambiental');
-
-    if (musica) {
-        musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
-        musica.play().catch(error => {
-            console.log("Esperando interacción para sonar:", error);
-        });
-    }
-
-    // Sincronizar el selector de la interfaz principal
-    document.getElementById('mission-select').value = misionID;
-
-    // Cambiar visuales y ocultar menú
+    const misionID = selectorMenu.value; 
+    
+    // Ocultar menú y mostrar juego
     document.getElementById('main-menu').style.display = 'none';
-    updateAdventureVisuals();
+    document.getElementById('contenedor-juego').style.display = 'flex';
 
-    // OBTENER LA INTRODUCCIÓN AUTOMÁTICA
+    // Limpiar chat anterior
+    document.getElementById('chat-output').innerHTML = '';
+
+    // Actualizar fondo
+    updateAdventureVisuals(misionID);
+
     const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
+    hablarConNarrador(`SISTEMA: Inicia partida en ${misionID}. Contexto: ${introNarrativa}`);
+}
 
-    // CONSTRUIR EL MENSAJE PARA LA IA
-    const mensajeParaIA = `SISTEMA: El usuario ha iniciado una partida nueva. 
-    Misión: ${nombreVisible}. 
-    Contexto inicial: ${introNarrativa} 
-    Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
+// CORRECCIÓN PARA VOLVER AL MENÚ
+window.irAlMenu = function() {
+    if (confirm("¿Volver al menú principal?")) {
+        document.getElementById('main-menu').style.display = 'flex';
+        document.getElementById('contenedor-juego').style.display = 'none';
+    }
+};
 
-    // Enviar a la IA (esto no aparecerá en el chat como texto del usuario si lo manejas bien)
-    hablarConNarrador(mensajeParaIA);
+// CORRECCIÓN PARA ACTUALIZAR VISUALES (Simplificada)
+function updateAdventureVisuals(mision) {
+    const body = document.body;
+    const imagenesFondo = {
+        "Novato 1": "url('img/bosque.webp')",
+        "Novato 2": "url('img/baile.webp')",
+        "Novato 3": "url('img/alquimia.jpg')",
+        "Intermedio 4": "url('img/espejos.jpg')",
+        "Intermedio 5": "url('img/laberinto.jpg')",
+        "Intermedio 6": "url('img/boda.jpg')"
+    };
+
+    if (imagenesFondo[mision]) {
+        body.style.backgroundImage = imagenesFondo[mision];
+    }
 }
 
 //******************* NENSAJE ESPECIAL
