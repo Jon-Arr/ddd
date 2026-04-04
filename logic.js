@@ -95,8 +95,7 @@ const events = [
 ];
 
 function drawCard() {
-    // IMPORTANTE: Buscamos el valor de la misión seleccionada en el menú principal
-    const selectedMission = document.getElementById('menu-mission-select').value;
+    const selectedMission = document.getElementById('mission-select').value;
     const filteredEvents = events.filter(e => e.adventure === selectedMission);
 
     if (filteredEvents.length === 0) {
@@ -110,10 +109,12 @@ function drawCard() {
     const cardDisplay = document.getElementById('card-display');
     cardDisplay.style.display = 'block';
 
+    document.getElementById('event-type').innerText = event.type;
     document.getElementById('event-title').innerText = event.title;
     document.getElementById('event-desc').innerText = event.desc;
 
-    hablarConNarrador(`Ha salido el evento: "${event.title}". ${event.desc}`);
+    // AVISO AUTOMÁTICO A LA IA
+    hablarConNarrador(`Ha salido la carta de evento: "${event.title}" (${event.type}). Descripción: ${event.desc}`);
 }
 
 function resetDeck() {
@@ -230,9 +231,11 @@ const backgrounds = {
     "Intermedio 6": "url('img/boda.jpg')"
 };
 
-// ÚNICA VERSIÓN DE updateAdventureVisuals
-function updateAdventureVisuals(mision) {
+function updateAdventureVisuals() {
+    const mission = document.getElementById('mission-select').value;
     const body = document.body;
+
+    // Diccionario de imágenes según la misión
     const imagenesFondo = {
         "Novato 1": "url('img/bosque.webp')",
         "Novato 2": "url('img/baile.webp')",
@@ -242,11 +245,16 @@ function updateAdventureVisuals(mision) {
         "Intermedio 6": "url('img/boda.jpg')"
     };
 
-    if (imagenesFondo[mision]) {
-        body.style.backgroundImage = imagenesFondo[mision];
+    // Aplicar la imagen
+    if (imagenesFondo[mission]) {
+        body.style.backgroundImage = imagenesFondo[mission];
         body.style.backgroundSize = "cover";
         body.style.backgroundPosition = "center";
-        body.style.backgroundAttachment = "fixed";
+        body.style.backgroundAttachment = "fixed"; // Para que no se mueva al hacer scroll
+        body.style.backgroundRepeat = "no-repeat";
+    } else {
+        body.style.backgroundColor = "#f4ece1"; // Color por defecto si falla la imagen
+        body.style.backgroundImage = "none";
     }
 }
 
@@ -329,32 +337,38 @@ function importGame(event) {
 }
 
 // Función para iniciar una partida nueva desde el menú
-// CORRECCIÓN PARA NEW GAME
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = document.getElementById('menu-mission-select').value;
+    const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
+    const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
+    const musica = document.getElementById('musica-ambiental');
 
-    // Mostrar/Ocultar
-    document.getElementById('main-menu').style.display = 'none';
-    document.getElementById('contenedor-juego').style.display = 'flex';
-
-    // Limpiar y Actualizar
-    document.getElementById('chat-output').innerHTML = '';
-    updateAdventureVisuals(misionID);
-
-    const intro = introMisiones[misionID] || "La aventura comienza...";
-    hablarConNarrador(`SISTEMA: Inicia partida en ${misionID}. Contexto: ${intro}`);
-}
-
-// CORRECCIÓN PARA VOLVER AL MENÚ
-window.irAlMenu = function() {
-    if (confirm("¿Volver al menú principal?")) {
-        document.getElementById('main-menu').style.display = 'flex';
-        document.getElementById('contenedor-juego').style.display = 'none';
+    if (musica) {
+        musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
+        musica.play().catch(error => {
+            console.log("Esperando interacción para sonar:", error);
+        });
     }
-};
 
+    // Sincronizar el selector de la interfaz principal
+    document.getElementById('mission-select').value = misionID;
 
+    // Cambiar visuales y ocultar menú
+    document.getElementById('main-menu').style.display = 'none';
+    updateAdventureVisuals();
+
+    // OBTENER LA INTRODUCCIÓN AUTOMÁTICA
+    const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
+
+    // CONSTRUIR EL MENSAJE PARA LA IA
+    const mensajeParaIA = `SISTEMA: El usuario ha iniciado una partida nueva. 
+    Misión: ${nombreVisible}. 
+    Contexto inicial: ${introNarrativa} 
+    Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
+
+    // Enviar a la IA (esto no aparecerá en el chat como texto del usuario si lo manejas bien)
+    hablarConNarrador(mensajeParaIA);
+}
 
 //******************* NENSAJE ESPECIAL
 
@@ -399,24 +413,7 @@ function toggleMute() {
     }
 }
 
-//****************** CAMBIAR A JUEGO NUEVO
 
-window.irAlMenu = function() {
-    if (confirm("¿Volver al menú principal?")) {
-        document.getElementById('main-menu').style.display = 'flex';
-        document.getElementById('contenedor-juego').style.display = 'none';
-    }
-};
-
-// Asegúrate de quitar el botón de "Cargar desde archivo" en tu HTML original
-
-
-//****************** EXPORTACIÓN DE FUNCIONES
-
-
-
-
-// EXPORTACIÓN DE FUNCIONES AL WINDOW
 window.newGame = newGame;
 window.rollDice = rollDice;
 window.logSkill = logSkill;
@@ -427,4 +424,4 @@ window.toggleMute = toggleMute;
 window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
-window.irAlMenu = irAlMenu; 
+window.importGame = importGame;
