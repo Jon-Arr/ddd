@@ -82,6 +82,10 @@ button, select, label, .result-display {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background-image: url('img/bgmenu.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .menu-content {
@@ -252,11 +256,16 @@ select {
 
 #chat-output {
     height: 300px;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
     overflow-y: auto;
     padding: 15px;
     text-align: left;
     font-size: 1.05rem;
     margin-top: 20px;
+    word-wrap: break-word;
+    box-sizing: border-box;
     
     /* Efecto Pergamino */
     background-color: #f2e3c9;
