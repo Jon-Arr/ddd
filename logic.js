@@ -231,11 +231,9 @@ const backgrounds = {
     "Intermedio 6": "url('img/boda.jpg')"
 };
 
-function updateAdventureVisuals() {
-    const mission = document.getElementById('mission-select').value;
+// ÚNICA VERSIÓN DE updateAdventureVisuals
+function updateAdventureVisuals(mision) {
     const body = document.body;
-
-    // Diccionario de imágenes según la misión
     const imagenesFondo = {
         "Novato 1": "url('img/bosque.webp')",
         "Novato 2": "url('img/baile.webp')",
@@ -245,16 +243,11 @@ function updateAdventureVisuals() {
         "Intermedio 6": "url('img/boda.jpg')"
     };
 
-    // Aplicar la imagen
-    if (imagenesFondo[mission]) {
-        body.style.backgroundImage = imagenesFondo[mission];
+    if (imagenesFondo[mision]) {
+        body.style.backgroundImage = imagenesFondo[mision];
         body.style.backgroundSize = "cover";
         body.style.backgroundPosition = "center";
-        body.style.backgroundAttachment = "fixed"; // Para que no se mueva al hacer scroll
-        body.style.backgroundRepeat = "no-repeat";
-    } else {
-        body.style.backgroundColor = "#f4ece1"; // Color por defecto si falla la imagen
-        body.style.backgroundImage = "none";
+        body.style.backgroundAttachment = "fixed";
     }
 }
 
@@ -364,22 +357,7 @@ window.irAlMenu = function() {
     }
 };
 
-// CORRECCIÓN PARA ACTUALIZAR VISUALES (Simplificada)
-function updateAdventureVisuals(mision) {
-    const body = document.body;
-    const imagenesFondo = {
-        "Novato 1": "url('img/bosque.webp')",
-        "Novato 2": "url('img/baile.webp')",
-        "Novato 3": "url('img/alquimia.jpg')",
-        "Intermedio 4": "url('img/espejos.jpg')",
-        "Intermedio 5": "url('img/laberinto.jpg')",
-        "Intermedio 6": "url('img/boda.jpg')"
-    };
 
-    if (imagenesFondo[mision]) {
-        body.style.backgroundImage = imagenesFondo[mision];
-    }
-}
 
 //******************* NENSAJE ESPECIAL
 
@@ -444,6 +422,9 @@ window.irAlMenu = function() {
 //****************** EXPORTACIÓN DE FUNCIONES
 
 
+
+
+// EXPORTACIÓN DE FUNCIONES AL WINDOW
 window.newGame = newGame;
 window.rollDice = rollDice;
 window.logSkill = logSkill;
@@ -454,4 +435,4 @@ window.toggleMute = toggleMute;
 window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
-window.importGame = importGame;
+window.irAlMenu = irAlMenu; 
