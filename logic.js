@@ -95,7 +95,8 @@ const events = [
 ];
 
 function drawCard() {
-    const selectedMission = document.getElementById('mission-select').value;
+    // IMPORTANTE: Buscamos el valor de la misión seleccionada en el menú principal
+    const selectedMission = document.getElementById('menu-mission-select').value;
     const filteredEvents = events.filter(e => e.adventure === selectedMission);
 
     if (filteredEvents.length === 0) {
@@ -109,12 +110,10 @@ function drawCard() {
     const cardDisplay = document.getElementById('card-display');
     cardDisplay.style.display = 'block';
 
-    document.getElementById('event-type').innerText = event.type;
     document.getElementById('event-title').innerText = event.title;
     document.getElementById('event-desc').innerText = event.desc;
 
-    // AVISO AUTOMÁTICO A LA IA
-    hablarConNarrador(`Ha salido la carta de evento: "${event.title}" (${event.type}). Descripción: ${event.desc}`);
+    hablarConNarrador(`Ha salido el evento: "${event.title}". ${event.desc}`);
 }
 
 function resetDeck() {
@@ -403,14 +402,9 @@ function toggleMute() {
 //****************** CAMBIAR A JUEGO NUEVO
 
 window.irAlMenu = function() {
-    if (confirm("¿Seguro que quieres volver al menú? Se perderán los cambios no guardados.")) {
-        // Ocultar pantalla de juego y mostrar menú
-        document.getElementById('pantalla-juego').style.display = 'none';
-        document.getElementById('menu-inicial').style.display = 'flex';
-        document.getElementById('game-nav').style.display = 'none';
-        
-        // Opcional: Limpiar el chat para una nueva aventura
-        document.getElementById('chat-output').innerHTML = '';
+    if (confirm("¿Volver al menú principal?")) {
+        document.getElementById('main-menu').style.display = 'flex';
+        document.getElementById('contenedor-juego').style.display = 'none';
     }
 };
 

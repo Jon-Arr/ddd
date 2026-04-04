@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>D&D Duet</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#8b4513">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -43,8 +41,7 @@
         </div>
     </div>
 
-    <div class="game-layout" id="contenedor-juego" style="display: none;">
-        
+    <div id="contenedor-juego" class="game-layout" style="display: none;">
         <nav id="game-nav">
             <button class="nav-btn" onclick="saveGame()">💾 Guardar</button>
             <button class="nav-btn" onclick="loadGame()">📂 Cargar</button>
@@ -54,8 +51,8 @@
         <div class="main-content">
             <aside class="panel-heroes">
                 <h3>Héroes</h3>
-                <div class="card"><strong>🧙‍♀️ Maga</strong><p>HP: 15</p></div>
-                <div class="card"><strong>🛡️ Caballero</strong><p>HP: 20</p></div>
+                <div class="hero-card"><strong>🧙‍♀️ Maga</strong><p>HP: 15</p></div>
+                <div class="hero-card"><strong>🛡️ Caballero</strong><p>HP: 20</p></div>
             </aside>
 
             <main class="panel-aventura">
@@ -81,13 +78,15 @@
                 <div id="result" class="result-display">--</div>
                 <div class="button-grid">
                     <button onclick="rollDice(4)">d4</button>
-                    <button onclick="rollDice(20)" style="background:#d4af37">d20</button>
+                    <button onclick="rollDice(20)" style="background:#d4af37; font-weight: bold;">d20</button>
                 </div>
             </aside>
         </div>
     </div>
 
-    <script type="module" src="logic.js?v=12"></script>
+    <audio id="musica-ambiental" loop></audio>
+    <audio id="audio-dados" src="snd/dado1.mp3"></audio>
+    <script type="module" src="logic.js"></script>
 </body>
 
 </html>
