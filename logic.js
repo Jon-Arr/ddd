@@ -310,32 +310,6 @@ function loadGame() {
     }
 }
 
-function importGame(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        try {
-            const data = JSON.parse(e.target.result);
-
-            // Restauramos todo en la interfaz
-            document.getElementById('mission-select').value = data.mision;
-            document.querySelector('.card:nth-child(2) input').value = data.hpMaga;
-            document.querySelector('.card:nth-child(3) input').value = data.hpCaballero;
-            document.getElementById('chat-output').innerHTML = data.historial;
-
-            document.getElementById('main-menu').style.display = 'none';
-            updateAdventureVisuals();
-
-            hablarConNarrador("He vuelto a la partida usando un registro guardado. Estamos en: " + data.mision);
-        } catch (err) {
-            alert("Error: El archivo no es un registro de partida válido.");
-        }
-    };
-    reader.readAsText(file);
-}
-
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
@@ -424,4 +398,3 @@ window.toggleMute = toggleMute;
 window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
-window.importGame = importGame;
