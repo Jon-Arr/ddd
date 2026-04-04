@@ -339,7 +339,7 @@ function importGame(event) {
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; 
+    const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
 
@@ -413,21 +413,6 @@ function toggleMute() {
     }
 }
 
-
-//*********************** FLUJO MENU PRINCIPAL
-// Función para volver al menú desde el juego
-window.irAlMenu = function() {
-    // Simplemente ocultamos el juego y mostramos el menú principal
-    // No borramos el chat aquí por si solo quieren guardar y seguir
-    document.getElementById('contenedor-juego').style.display = 'none';
-    document.getElementById('game-nav').style.display = 'none';
-    document.getElementById('menu-inicial').style.display = 'flex';
-};
-
-
-
-
-//*********************** EXPORTACIÓN DE FUNCIONES
 
 window.newGame = newGame;
 window.rollDice = rollDice;
