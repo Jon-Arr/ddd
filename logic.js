@@ -332,7 +332,7 @@ function importGame(event) {
 // CORRECCIÓN PARA NEW GAME
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; 
+    const misionID = document.getElementById('menu-mission-select').value;
 
     // Mostrar/Ocultar
     document.getElementById('main-menu').style.display = 'none';

@@ -17,25 +17,17 @@
 </head>
 
 <body>
-    <div class="audio-controls">
-        <button id="btn-mute" onclick="toggleMute()">🔊</button>
-        <input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="0.5" oninput="ajustarVolumen(this.value)">
-    </div>
-
     <div id="main-menu" class="menu-overlay">
         <div class="menu-content">
             <h1>D&D Duet</h1>
             <button onclick="newGame()">Nueva Aventura</button>
             <button onclick="loadGame()">Cargar Partida</button>
-            <div class="mission-selector-menu">
-                <label>Seleccionar Destino:</label>
+            <div style="margin-top:20px;">
+                <label>Destino:</label>
                 <select id="menu-mission-select">
                     <option value="Novato 1">El Rescate del Cachorro Alado</option>
                     <option value="Novato 2">El Baile de las Sombras Gemelas</option>
                     <option value="Novato 3">La Pócima de la Risa</option>
-                    <option value="Intermedio 4">El Juicio de los Espejos</option>
-                    <option value="Intermedio 5">El Laberinto de los Suspiros</option>
-                    <option value="Intermedio 6">La Boda del Dragón</option>
                 </select>
             </div>
         </div>
@@ -43,27 +35,26 @@
 
     <div id="contenedor-juego" class="game-layout" style="display: none;">
         <nav id="game-nav">
-            <button class="nav-btn" onclick="saveGame()">💾 Guardar</button>
-            <button class="nav-btn" onclick="loadGame()">📂 Cargar</button>
-            <button class="nav-btn" onclick="irAlMenu()">🏠 Menú</button>
+            <button onclick="saveGame()">💾 Guardar</button>
+            <button onclick="irAlMenu()">🏠 Menú</button>
         </nav>
 
         <div class="main-content">
             <aside class="panel-heroes">
                 <h3>Héroes</h3>
-                <div class="hero-card"><strong>🧙‍♀️ Maga</strong><p>HP: 15</p></div>
-                <div class="hero-card"><strong>🛡️ Caballero</strong><p>HP: 20</p></div>
+                <div class="hero-card"><strong>🧙‍♀️ Maga</strong><br>HP: <input type="number" value="15" style="width:40px"></div>
+                <div class="hero-card"><strong>🛡️ Caballero</strong><br>HP: <input type="number" value="20" style="width:40px"></div>
             </aside>
 
             <main class="panel-aventura">
                 <div id="chat-output"></div>
                 
-                <div id="deck-area">
-                    <div id="deck" onclick="drawCard()"><span>TAP EVENTO</span></div>
-                    <div id="card-display" style="display:none;">
+                <div id="deck-area" style="text-align:center">
+                    <div id="deck" onclick="drawCard()">TAP EVENTO</div>
+                    <div id="card-display" style="display:none; background:#fdf5e6; padding:15px; border:2px solid #8b4513">
                         <h3 id="event-title"></h3>
                         <p id="event-desc"></p>
-                        <button onclick="resetDeck()">Reiniciar</button>
+                        <button onclick="resetDeck()">Cerrar</button>
                     </div>
                 </div>
 
@@ -75,17 +66,16 @@
 
             <aside class="panel-dados">
                 <h3>Dados</h3>
-                <div id="result" class="result-display">--</div>
-                <div class="button-grid">
+                <div id="result" style="font-size:3rem; text-align:center; color:#8b4513">--</div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px">
                     <button onclick="rollDice(4)">d4</button>
-                    <button onclick="rollDice(20)" style="background:#d4af37; font-weight: bold;">d20</button>
+                    <button onclick="rollDice(20)" style="background:#d4af37">d20</button>
                 </div>
             </aside>
         </div>
     </div>
 
     <audio id="musica-ambiental" loop></audio>
-    <audio id="audio-dados" src="snd/dado1.mp3"></audio>
     <script type="module" src="logic.js"></script>
 </body>
 
