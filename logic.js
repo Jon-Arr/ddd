@@ -334,19 +334,17 @@ function importGame(event) {
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
     const misionID = selectorMenu.value; 
-    
-    // Ocultar menú y mostrar juego
+
+    // Mostrar/Ocultar
     document.getElementById('main-menu').style.display = 'none';
     document.getElementById('contenedor-juego').style.display = 'flex';
 
-    // Limpiar chat anterior
+    // Limpiar y Actualizar
     document.getElementById('chat-output').innerHTML = '';
-
-    // Actualizar fondo
     updateAdventureVisuals(misionID);
 
-    const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
-    hablarConNarrador(`SISTEMA: Inicia partida en ${misionID}. Contexto: ${introNarrativa}`);
+    const intro = introMisiones[misionID] || "La aventura comienza...";
+    hablarConNarrador(`SISTEMA: Inicia partida en ${misionID}. Contexto: ${intro}`);
 }
 
 // CORRECCIÓN PARA VOLVER AL MENÚ

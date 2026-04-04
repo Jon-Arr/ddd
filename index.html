@@ -28,9 +28,9 @@
         <div class="menu-content">
             <h1>D&D Duet</h1>
             <button onclick="newGame()">Nueva Aventura</button>
-            <button onclick="loadGame()">Cargar Partida</button><br>
+            <button onclick="loadGame()">Cargar Partida</button>
             <div class="mission-selector-menu">
-                <label>Seleccionar Destino:</label><br>
+                <label>Seleccionar Destino:</label>
                 <select id="menu-mission-select">
                     <option value="Novato 1">El Rescate del Cachorro Alado</option>
                     <option value="Novato 2">El Baile de las Sombras Gemelas</option>
@@ -43,52 +43,50 @@
         </div>
     </div>
 
-    <div class="game-container" id="contenedor-juego" style="display: none;">
+    <div class="game-layout" id="contenedor-juego" style="display: none;">
+        
         <nav id="game-nav">
-            <button onclick="saveGame()">💾 Guardar</button>
-            <button onclick="loadGame()">📂 Cargar</button>
-            <button onclick="irAlMenu()">🏠 Menú Principal</button>
+            <button class="nav-btn" onclick="saveGame()">💾 Guardar</button>
+            <button class="nav-btn" onclick="loadGame()">📂 Cargar</button>
+            <button class="nav-btn" onclick="irAlMenu()">🏠 Menú</button>
         </nav>
 
-        <div class="layout-flex">
-            <aside class="heroes-panel">
+        <div class="main-content">
+            <aside class="panel-heroes">
                 <h3>Héroes</h3>
-                </aside>
+                <div class="card"><strong>🧙‍♀️ Maga</strong><p>HP: 15</p></div>
+                <div class="card"><strong>🛡️ Caballero</strong><p>HP: 20</p></div>
+            </aside>
 
-            <main>
-                <div id="pantalla-juego">
-                    <div id="chat-output">Esperando al narrador...</div>
-                </div>
-
-                <div id="deck-container">
-                    <div id="deck" onclick="drawCard()"><span>TAP PARA ROBAR EVENTO</span></div>
+            <main class="panel-aventura">
+                <div id="chat-output"></div>
+                
+                <div id="deck-area">
+                    <div id="deck" onclick="drawCard()"><span>TAP EVENTO</span></div>
                     <div id="card-display" style="display:none;">
-                        <h4 id="event-type"></h4>
                         <h3 id="event-title"></h3>
                         <p id="event-desc"></p>
-                        <button onclick="resetDeck()">Reiniciar Mazo</button>
+                        <button onclick="resetDeck()">Reiniciar</button>
                     </div>
                 </div>
 
-                <div class="chat-input-container">
-                    <input type="text" id="user-input" placeholder="Dime qué sigue...">
+                <div class="input-area">
+                    <input type="text" id="user-input" placeholder="¿Qué haces ahora?">
                     <button onclick="enviarAccion()">Enviar</button>
                 </div>
             </main>
 
-            <aside class="dice-panel">
+            <aside class="panel-dados">
                 <h3>Dados</h3>
                 <div id="result" class="result-display">--</div>
                 <div class="button-grid">
                     <button onclick="rollDice(4)">d4</button>
-                    <button onclick="rollDice(20)" style="background: #d4af37;">d20</button>
+                    <button onclick="rollDice(20)" style="background:#d4af37">d20</button>
                 </div>
             </aside>
         </div>
     </div>
 
-    <audio id="musica-ambiental" src="snd/bgmusic.mp3" loop></audio>
-    <audio id="audio-dados" src="snd/dado1.mp3"></audio>
     <script type="module" src="logic.js?v=12"></script>
 </body>
 
