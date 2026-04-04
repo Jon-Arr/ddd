@@ -82,6 +82,10 @@ button, select, label, .result-display {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    background-image: url('img/bgmenu.jpg'); /* Reemplaza con el nombre de tu archivo */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .menu-content {
