@@ -96,6 +96,11 @@ button, select, label, .result-display {
     border-radius: 20px;
 }
 
+.menu-content button {
+    margin: 5px;
+    min-width: 180px; /* Asegura que los botones tengan un tamaño uniforme */
+}
+
 .game-container {
     display: flex;
     gap: 20px;
