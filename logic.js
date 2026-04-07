@@ -434,34 +434,30 @@ function narrarVoz(texto) {
 
     window.speechSynthesis.cancel();
     const mensaje = new SpeechSynthesisUtterance(texto);
-
-    // Obtener la lista de voces
+    
     const voces = window.speechSynthesis.getVoices();
 
-    // Buscamos una voz que suene masculina o que sea "Natural"
-    // Los nombres varían por navegador, pero estos son los más comunes para hombres
-    const vozNeutral = voces.find(voz =>
-        voz.lang.includes('es') && (
-            voz.name.includes('Neural') ||
-            voz.name.includes('Standard-B') || // Generalmente código para voces masculinas
-            voz.name.includes('Microsoft Enrique') ||
-            voz.name.includes('Google español') ||
-            voz.name.includes('Castilian')
-        ) && !voz.name.includes('Helena') && !voz.name.includes('Laura') // Excluimos nombres femeninos comunes
+    // Buscamos específicamente la voz de Google Masculina, que es la más natural
+    // Esta voz suele llamarse "Google español de Estados Unidos" o "Google español"
+    let vozElegida = voces.find(voz => 
+        voz.name.includes('Google') && voz.lang.includes('es')
+    ) || voces.find(voz => 
+        voz.lang.includes('es') && (voz.name.includes('David') || voz.name.includes('Alvaro'))
     );
 
-    if (vozNeutral) {
-        mensaje.voice = vozNeutral;
+    if (vozElegida) {
+        mensaje.voice = vozElegida;
     }
 
-    // --- AJUSTES PARA EFECTO ANCIANO ---
-    mensaje.lang = 'es-Mx';
-
-    // Bajamos el tono significativamente para que sea más grave (0.5 - 0.7)
-    mensaje.pitch = 0.6;
-
-    // Lo hacemos más lento para dar sensación de edad y sabiduría
-    mensaje.rate = 0.8;
+    // --- CONFIGURACIÓN PARA MÁXIMA FLUIDEZ NEUTRAL ---
+    // Usamos 'es-US' porque esa variante específica de Google es muy limpia y masculina
+    mensaje.lang = 'es-US'; 
+    
+    // Tono: 0.9 es casi natural, pero un pelín más serio
+    mensaje.pitch = 0.9; 
+    
+    // Velocidad: 0.95 es casi humana, perfecta para no sonar acelerado ni lento
+    mensaje.rate = 0.95; 
 
     mensaje.volume = volumenVozActual;
 
