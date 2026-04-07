@@ -455,7 +455,7 @@ function narrarVoz(texto) {
     }
 
     // --- AJUSTES PARA EFECTO ANCIANO ---
-    mensaje.lang = 'es-ES';
+    mensaje.lang = 'es-Mx';
 
     // Bajamos el tono significativamente para que sea más grave (0.5 - 0.7)
     mensaje.pitch = 0.6;
