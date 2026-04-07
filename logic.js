@@ -442,11 +442,11 @@ function narrarVoz(texto) {
     // Los nombres varían por navegador, pero estos son los más comunes para hombres
     const vozMasculina = voces.find(voz => 
         (voz.lang.includes('es') && (
+            voz.name.includes('Castilian Spanish Male') ||
             voz.name.includes('Microsoft David') || 
             voz.name.includes('Google español') || 
             voz.name.includes('Alvaro') || 
             voz.name.includes('Jorge') || 
-            voz.name.includes('Castilian Spanish Male') ||
             voz.name.includes('Natural')
         ))
     );
