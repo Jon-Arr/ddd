@@ -125,22 +125,13 @@
     </aside>
 
     <main>
-        <div class="mision">
-            <label for="mission-select">Elegir Misión:</label><br>
-            <select id="mission-select" onchange="resetDeck()">
-                <option value="Novato 1">1. El Rescate del Cachorro Alado</option>
-                <option value="Novato 2">2. El Baile de las Sombras Gemelas</option>
-                <option value="Novato 3">3. La Pócima de la Risa</option>
-                <option value="Intermedio 4">4. El Juicio de los Espejos</option>
-                <option value="Intermedio 5">5. El Laberinto de los Suspiros</option>
-                <option value="Intermedio 6">6. La Boda del Dragón</option>
-            </select>
-            <div style="margin-top: 10px; text-align: right;">
-                <button onclick="saveGame()">
-                    💾 Guardar Progreso
-                </button>
-            </div>
+        <div class="menu-principal" style="text-align: left; margin-bottom: 20px;">
+            <button onclick="regresarAlMenu()" style="background: #5d2e0a;">
+                📜 Menú Principal
+            </button>
         </div>
+
+        <select id="mission-select" style="display: none;"></select>
         <h2 id="adventure-title">Aventura Actual</h2>
 
         <div id="deck" onclick="drawCard()">
@@ -187,9 +178,9 @@
     </aside>
 
     </div>
-    
+
     <script type="module" src="logic.js?v=11"></script>
-    
+
     <audio id="audio-dados" src="snd/dado1.mp3" preload="auto"></audio>
 
 

@@ -313,7 +313,7 @@ function loadGame() {
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; // Ejemplo: "Novato 1"
+    const misionID = selectorMenu.value; 
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
 
@@ -387,6 +387,15 @@ function toggleMute() {
     }
 }
 
+//****************** REGRESAR AL MENÚ
+
+function regresarAlMenu() {
+    document.getElementById('main-menu').style.display = 'flex';
+}
+
+
+//****************** EXPORTACIÓN DE FUNCIONES
+
 
 window.newGame = newGame;
 window.rollDice = rollDice;
@@ -398,3 +407,4 @@ window.toggleMute = toggleMute;
 window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
+window.regresarAlMenu = regresarAlMenu;
