@@ -172,9 +172,9 @@ window.onload = () => {
 const API_KEY = "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";
 
 // Definimos la función de forma global directamente
-window.hablarConNarrador = async function(mensajeUsuario) {
+window.hablarConNarrador = async function (mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    
+
     try {
         // Ahora llamamos a nuestra propia ruta interna
         const response = await fetch('/api/chat', {
@@ -187,7 +187,8 @@ window.hablarConNarrador = async function(mensajeUsuario) {
 
         if (data.choices && data.choices[0].message.content) {
             const textoIA = data.choices[0].message.content;
-            narrarVoz(textoIA); 
+            log.innerHTML += `<div><strong>Narrador:</strong> ${textoIA}</div>`;
+            narrarVoz(textoIA);
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         }
@@ -314,9 +315,13 @@ function loadGame() {
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; 
+    const misionID = selectorMenu.value;
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
+    const textoIntro = introMisiones[misionID];
+    log.innerHTML += `<div><strong>Narrador:</strong> ${textoIntro}</div>`;
+
+    narrarVoz(textoIntro); // <--- AGREGAR ESTO
 
     if (musica) {
         musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
@@ -399,15 +404,22 @@ function regresarAlMenu() {
 
 // Función para que el navegador lea el texto en voz alta
 function narrarVoz(texto) {
-    // Cancelar cualquier narración previa para que no se amontonen
+    // 1. Cancelar cualquier locución pendiente
     window.speechSynthesis.cancel();
 
-    const mensaje = new SpeechSynthesisUtterance(texto);
-    
-    // Configuración de la voz
-    mensaje.lang = 'es-ES'; // Idioma español
-    mensaje.rate = 1.0;     // Velocidad (0.1 a 10)
-    mensaje.pitch = 0.8;    // Tono (0 a 2, un poco más bajo para sonar más místico)
+    // 2. Crear el mensaje limpiando etiquetas HTML si las hubiera
+    const limpio = texto.replace(/<[^>]*>?/gm, '');
+    const mensaje = new SpeechSynthesisUtterance(limpio);
+
+    // 3. Forzar idioma y buscar una voz en español disponible
+    mensaje.lang = 'es-ES';
+    const voces = window.speechSynthesis.getVoices();
+    const vozEspañol = voces.find(v => v.lang.includes('es'));
+    if (vozEspañol) mensaje.voice = vozEspañol;
+
+    // 4. Configuración de tono y velocidad
+    mensaje.rate = 0.9; // Un poco más lento para que sea solemne
+    mensaje.pitch = 1;
 
     window.speechSynthesis.speak(mensaje);
 }
@@ -427,4 +439,3 @@ window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
 window.regresarAlMenu = regresarAlMenu;
-window.narrarVoz = narrarVoz;
