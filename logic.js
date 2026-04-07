@@ -187,6 +187,7 @@ window.hablarConNarrador = async function(mensajeUsuario) {
 
         if (data.choices && data.choices[0].message.content) {
             const textoIA = data.choices[0].message.content;
+            narrarVoz(textoIA); 
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         }
@@ -394,6 +395,24 @@ function regresarAlMenu() {
 }
 
 
+//****************** VOZ NARRADOR
+
+// Función para que el navegador lea el texto en voz alta
+function narrarVoz(texto) {
+    // Cancelar cualquier narración previa para que no se amontonen
+    window.speechSynthesis.cancel();
+
+    const mensaje = new SpeechSynthesisUtterance(texto);
+    
+    // Configuración de la voz
+    mensaje.lang = 'es-ES'; // Idioma español
+    mensaje.rate = 1.0;     // Velocidad (0.1 a 10)
+    mensaje.pitch = 0.8;    // Tono (0 a 2, un poco más bajo para sonar más místico)
+
+    window.speechSynthesis.speak(mensaje);
+}
+
+
 //****************** EXPORTACIÓN DE FUNCIONES
 
 
@@ -408,3 +427,4 @@ window.ajustarVolumen = ajustarVolumen;
 window.saveGame = saveGame;
 window.loadGame = loadGame;
 window.regresarAlMenu = regresarAlMenu;
+window.narrarVoz = narrarVoz;

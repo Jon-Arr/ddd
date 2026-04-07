@@ -47,8 +47,7 @@
 
     </div>
 
-    <div class="game-container">
-
+    <!-- <div class="game-container">
         <aside>
             <h3>Héroes</h3>
             <div class="card">
@@ -122,7 +121,7 @@
                 </div>
             </div>
     </div>
-    </aside>
+    </aside> -->
 
     <main>
         <div class="menu-principal" style="text-align: left; margin-bottom: 20px;">
@@ -160,7 +159,79 @@
     </main>
 
     <aside class="dice-panel">
-        <h3>Tirar los Dados</h3>
+        <h3>Héroes</h3>
+        <div class="card">
+            <strong>🧙‍♀️ Maga</strong>
+            <p>HP: <input type="number" value="15" disabled style="width: 40px;"></p>
+            <div class="skill-buttons">
+                <div class="skill">
+                    <button onclick="logSkill('La Maga ha usado Destello de Éxtasis')">✨ Destello de
+                        Éxtasis</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> Lanza una explosión de luz rosada que ciega a los
+                            enemigos.<br><b>Mecánica:</b> Tira 1d20 + Inteligencia. Si aciertas, el enemigo falla su
+                            próximo ataque.</span>
+                    </span>
+                </div>
+                <div class="skill">
+                    <button onclick="logSkill('La Maga ha usado Vínculo Arcano')">🔗 Vínculo Arcano</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> Crea un hilo de energía entre ella y el
+                            Caballero.<br><b>Mecánica:</b> La Maga puede transferir hasta 5 de sus propios HP al
+                            Caballero para sanarlo instantáneamente.</span>
+                    </span>
+                </div>
+                <div class="skill">
+                    <button onclick="logSkill('La Maga ha usado Ojo del Destino')">👁️ Ojo del Destino</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> Sus ojos brillan permitiéndole ver rastros mágicos o
+                            intenciones ocultas.<br><b>Mecánica:</b> Suma un +5 a cualquier tirada de Investigación
+                            o Percepción.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <strong>🛡️ Caballero</strong>
+            <p>HP: <input type="number" value="20" disabled style="width: 40px;"></p>
+            <div class="skill-buttons">
+                <div class="skill">
+                    <button onclick="logSkill('El Caballero ha usado Estocada Galante')">⚔️ Estocada
+                        Galante</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> Un ataque preciso con su espada que debilita la
+                            armadura enemiga.<br><b>Mecánica:</b> Tira 1d20 + Fuerza. Si aciertas, haces 1d10 de
+                            daño y el próximo ataque de la Maga tiene Ventaja.</span>
+                    </span>
+                </div>
+                <div class="skill">
+                    <button onclick="logSkill('El Caballero ha usado Promesa de Protección')">🛡️ Promesa de
+                        Protección</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> El Caballero se interpone en el camino de un ataque
+                            dirigido a la Maga.<br><b>Mecánica:</b> Una vez por combate, el Caballero recibe el daño
+                            que iba a recibir la Maga, reduciéndolo a la mitad.</span>
+                    </span>
+                </div>
+                <div class="skill">
+                    <button onclick="logSkill('El Caballero ha usado Grito de Aliento')">🗣️ Grito de
+                        Aliento</button>
+                    <span class="info-icon">
+                        ℹ️
+                        <span class="tooltip"><b>Efecto:</b> Un discurso breve pero inspirador que renueva las
+                            fuerzas.<br><b>Mecánica:</b> Ambos recuperan 1d6 de HP temporal (solo se puede usar una
+                            vez por aventura).</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="tirarDados">Tirar los Dados</h3>
         <div id="result" class="result-display">--</div>
         <p id="dice-type">Selecciona un dado</p>
 

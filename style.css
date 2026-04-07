@@ -115,9 +115,15 @@ button, select, label, .result-display {
     padding: 10px;
     background: #8e851e36;
 }
+strong {
+    font-size: 18px;
+    font-family: 'Georgia', serif;
+    color: #5d2e0a;
+}
 
 .skill-buttons button {
     width: 200px;
+    margin: 5px
 }
 
 .info-icon {
@@ -161,20 +167,16 @@ button, select, label, .result-display {
 .dice-panel,
 .game-container,
 main {
-    /* background: #fff8dc; */
     border: 3px solid #8b4513;
     border-radius: 15px;
     padding: 25px;
     justify-content: center;
     margin: 20px;
-    width: 300px;
+    width: 400px;
     text-align: center;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.821);
     background: rgba(255, 248, 220, 0.9) !important;
-    /* Fondo crema con 90% de opacidad */
     backdrop-filter: blur(5px);
-    /* Opcional: difumina un poco el fondo detrás del panel */
 }
 
 .menu-principal {
@@ -419,13 +421,11 @@ button:active {
     border-bottom: 1px solid rgba(139, 69, 19, 0.1);
 }
 
-.spotify-container {
-    margin-top: 20px;
-    border: 2px solid #8b4513;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+.tirarDados {
+    border-top: 2px double #8b4513;
+    padding-top: 20px;
 }
+
 
 
 /* --- ADAPTACIÓN PARA MÓVILES (Media Query) --- */
