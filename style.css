@@ -21,12 +21,18 @@ body {
     align-items: center;
     gap: 10px;
     backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 #volumen-slider {
     width: 80px;
     accent-color: #8b4513;
     cursor: pointer;
+}
+
+#volumen-voz {
+    width: 60px; /* Un poco más corto que el de música */
+    accent-color: #5d2e0a;
 }
 
 #btn-mute {

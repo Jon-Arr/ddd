@@ -399,7 +399,39 @@ function regresarAlMenu() {
 //****************** VOZ NARRADOR
 
 // Función para que el navegador lea el texto en voz alta
+// Variables de control de voz
+let vozSilenciada = false;
+let volumenVozActual = 0.8;
+
+function ajustarVolumenVoz(valor) {
+    volumenVozActual = parseFloat(valor);
+    const btn = document.getElementById('btn-mute-voz');
+    
+    if (volumenVozActual === 0) {
+        btn.innerText = "🚫";
+        vozSilenciada = true;
+    } else {
+        btn.innerText = "🎙️";
+        vozSilenciada = false;
+    }
+}
+
+function toggleMuteVoz() {
+    vozSilenciada = !vozSilenciada;
+    const btn = document.getElementById('btn-mute-voz');
+    const slider = document.getElementById('volumen-voz');
+    
+    if (vozSilenciada) {
+        btn.innerText = "🚫";
+        window.speechSynthesis.cancel(); // Detiene la voz actual inmediatamente
+    } else {
+        btn.innerText = "🎙️";
+    }
+}
+
 function narrarVoz(texto) {
+    if (vozSilenciada || volumenVozActual === 0) return;
+
     window.speechSynthesis.cancel();
     const mensaje = new SpeechSynthesisUtterance(texto);
     
@@ -431,6 +463,8 @@ function narrarVoz(texto) {
     
     // Lo hacemos más lento para dar sensación de edad y sabiduría
     mensaje.rate = 0.8; 
+
+    mensaje.volume = volumenVozActual;
 
     window.speechSynthesis.speak(mensaje);
 }
