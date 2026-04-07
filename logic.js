@@ -411,9 +411,12 @@ function narrarVoz(texto) {
     // Intentar encontrar una voz de hombre en español (suelen sonar más graves)
     // O voces que digan "Natural" (que son las más fluidas)
     const vozPreferida = voces.find(voz => 
-        (voz.lang.includes('es') && voz.name.includes('Google')) || 
+        // (voz.lang.includes('es') && voz.name.includes('Google')) || 
+        // (voz.lang.includes('es') && voz.name.includes('Natural')) ||
+        // (voz.lang.includes('es-ES') && voz.name.includes('Alvaro'))
+        (voz.lang.includes('es-ES') && voz.name.includes('Alvaro')) || 
         (voz.lang.includes('es') && voz.name.includes('Natural')) ||
-        (voz.lang.includes('es-ES') && voz.name.includes('Alvaro'))
+        (voz.lang.includes('es') && voz.name.includes('Google'))
     );
 
     if (vozPreferida) {
@@ -424,7 +427,7 @@ function narrarVoz(texto) {
     mensaje.lang = 'es-ES';
     
     // Un poco más lento le da peso y sabiduría al relato (Rango 0.1 a 10)
-    mensaje.rate = 0.85; 
+    mensaje.rate = 2.5 
     
     // Bajamos el tono para que suene más grave/profundo (Rango 0 a 2)
     mensaje.pitch = 0.7; 
