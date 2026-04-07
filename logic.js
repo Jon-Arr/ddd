@@ -172,9 +172,9 @@ window.onload = () => {
 const API_KEY = "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";
 
 // Definimos la función de forma global directamente
-window.hablarConNarrador = async function(mensajeUsuario) {
+window.hablarConNarrador = async function (mensajeUsuario) {
     const log = document.getElementById('chat-output');
-    
+
     try {
         // Ahora llamamos a nuestra propia ruta interna
         const response = await fetch('/api/chat', {
@@ -187,7 +187,7 @@ window.hablarConNarrador = async function(mensajeUsuario) {
 
         if (data.choices && data.choices[0].message.content) {
             const textoIA = data.choices[0].message.content;
-            narrarVoz(textoIA); 
+            narrarVoz(textoIA);
             log.innerHTML += `<div style="margin-bottom:10px; color:#4b2c20; background: #fdf5e6; padding: 10px; border-radius: 5px; border-left: 5px solid #d4af37;"><strong>Narrador:</strong> ${textoIA}</div>`;
             log.scrollTop = log.scrollHeight;
         }
@@ -315,7 +315,7 @@ function loadGame() {
 // Función para iniciar una partida nueva desde el menú
 function newGame() {
     const selectorMenu = document.getElementById('menu-mission-select');
-    const misionID = selectorMenu.value; 
+    const misionID = selectorMenu.value;
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
 
@@ -406,7 +406,7 @@ let volumenVozActual = 0.8;
 function ajustarVolumenVoz(valor) {
     volumenVozActual = parseFloat(valor);
     const btn = document.getElementById('btn-mute-voz');
-    
+
     if (volumenVozActual === 0) {
         btn.innerText = "🚫";
         vozSilenciada = true;
@@ -420,7 +420,7 @@ function toggleMuteVoz() {
     vozSilenciada = !vozSilenciada;
     const btn = document.getElementById('btn-mute-voz');
     const slider = document.getElementById('volumen-voz');
-    
+
     if (vozSilenciada) {
         btn.innerText = "🚫";
         window.speechSynthesis.cancel(); // Detiene la voz actual inmediatamente
@@ -434,35 +434,34 @@ function narrarVoz(texto) {
 
     window.speechSynthesis.cancel();
     const mensaje = new SpeechSynthesisUtterance(texto);
-    
+
     // Obtener la lista de voces
     const voces = window.speechSynthesis.getVoices();
 
     // Buscamos una voz que suene masculina o que sea "Natural"
     // Los nombres varían por navegador, pero estos son los más comunes para hombres
-    const vozMasculina = voces.find(voz => 
-        (voz.lang.includes('es') && (
-            voz.name.includes('Castilian Spanish Male') ||
-            voz.name.includes('Microsoft David') || 
-            voz.name.includes('Google español') || 
-            voz.name.includes('Alvaro') || 
-            voz.name.includes('Jorge') || 
-            voz.name.includes('Natural')
-        ))
+    const vozNeutral = voces.find(voz =>
+        voz.lang.includes('es') && (
+            voz.name.includes('Neural') ||
+            voz.name.includes('Standard-B') || // Generalmente código para voces masculinas
+            voz.name.includes('Microsoft Enrique') ||
+            voz.name.includes('Google español') ||
+            voz.name.includes('Castilian')
+        ) && !voz.name.includes('Helena') && !voz.name.includes('Laura') // Excluimos nombres femeninos comunes
     );
 
-    if (vozMasculina) {
-        mensaje.voice = vozMasculina;
+    if (vozNeutral) {
+        mensaje.voice = vozNeutral;
     }
 
     // --- AJUSTES PARA EFECTO ANCIANO ---
     mensaje.lang = 'es-ES';
-    
+
     // Bajamos el tono significativamente para que sea más grave (0.5 - 0.7)
-    mensaje.pitch = 0.6; 
-    
+    mensaje.pitch = 0.6;
+
     // Lo hacemos más lento para dar sensación de edad y sabiduría
-    mensaje.rate = 0.8; 
+    mensaje.rate = 0.8;
 
     mensaje.volume = volumenVozActual;
 
