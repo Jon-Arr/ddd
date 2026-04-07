@@ -400,18 +400,44 @@ function regresarAlMenu() {
 
 // Función para que el navegador lea el texto en voz alta
 function narrarVoz(texto) {
-    // Cancelar cualquier narración previa para que no se amontonen
+    // Cancelar cualquier audio en curso
     window.speechSynthesis.cancel();
 
     const mensaje = new SpeechSynthesisUtterance(texto);
     
-    // Configuración de la voz
-    mensaje.lang = 'es-ES'; // Idioma español
-    mensaje.rate = 1.0;     // Velocidad (0.1 a 10)
-    mensaje.pitch = 0.8;    // Tono (0 a 2, un poco más bajo para sonar más místico)
+    // Obtener todas las voces disponibles en el sistema
+    const voces = window.speechSynthesis.getVoices();
+
+    // Intentar encontrar una voz de hombre en español (suelen sonar más graves)
+    // O voces que digan "Natural" (que son las más fluidas)
+    const vozPreferida = voces.find(voz => 
+        (voz.lang.includes('es') && voz.name.includes('Google')) || 
+        (voz.lang.includes('es') && voz.name.includes('Natural')) ||
+        (voz.lang.includes('es-ES') && voz.name.includes('Alvaro'))
+    );
+
+    if (vozPreferida) {
+        mensaje.voice = vozPreferida;
+    }
+
+    // --- PARÁMETROS PARA EFECTO ANCIANO ---
+    mensaje.lang = 'es-ES';
+    
+    // Un poco más lento le da peso y sabiduría al relato (Rango 0.1 a 10)
+    mensaje.rate = 0.85; 
+    
+    // Bajamos el tono para que suene más grave/profundo (Rango 0 a 2)
+    mensaje.pitch = 0.7; 
+
+    // Volumen al máximo
+    mensaje.volume = 1;
 
     window.speechSynthesis.speak(mensaje);
 }
+
+// IMPORTANTE: Las voces se cargan de forma asíncrona. 
+// Esta línea ayuda a que el navegador las tenga listas.
+window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 
 
 //****************** EXPORTACIÓN DE FUNCIONES
