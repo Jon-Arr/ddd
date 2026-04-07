@@ -224,15 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //******************BG AVENTURA
 
-const backgrounds = {
-    "Novato 1": "url('img/bosque.webp')",
-    "Novato 2": "url('img/baile.webp')",
-    "Novato 3": "url('img/alquimia.jpg')",
-    "Intermedio 4": "url('img/espejos.jpg')",
-    "Intermedio 5": "url('img/laberinto.jpg')",
-    "Intermedio 6": "url('img/boda.jpg')"
-};
-
 function updateAdventureVisuals() {
     const mission = document.getElementById('mission-select').value;
     const body = document.body;
@@ -310,6 +301,7 @@ function loadGame() {
     } else {
         alert("No se encontró ninguna partida guardada en este dispositivo.");
     }
+    updateAdventureVisuals();
 }
 
 // Función para iniciar una partida nueva desde el menú
@@ -319,30 +311,36 @@ function newGame() {
     const nombreVisible = selectorMenu.options[selectorMenu.selectedIndex].text;
     const musica = document.getElementById('musica-ambiental');
 
+    // 1. Sincronizar el selector oculto PRIMERO
+    const mainSelect = document.getElementById('mission-select');
+    if (mainSelect) {
+        mainSelect.value = misionID;
+    }
+
+    // 2. Ejecutar visuales ANTES de ocultar el menú
+    // Esto prepara el fondo mientras la pantalla del menú aún está encima
+    updateAdventureVisuals();
+
+    // 3. Manejo de música
     if (musica) {
-        musica.volume = 0.5; // Ajusta el volumen para que no tape los sonidos de dados
+        musica.volume = 0.5;
         musica.play().catch(error => {
             console.log("Esperando interacción para sonar:", error);
         });
     }
 
-    // Sincronizar el selector de la interfaz principal
-    document.getElementById('mission-select').value = misionID;
-
-    // Cambiar visuales y ocultar menú
+    // 4. Ocultar el menú principal
     document.getElementById('main-menu').style.display = 'none';
-    updateAdventureVisuals();
 
-    // OBTENER LA INTRODUCCIÓN AUTOMÁTICA
+    // 5. Preparar narrativa
     const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
 
-    // CONSTRUIR EL MENSAJE PARA LA IA
+    // 6. Enviar a la IA
     const mensajeParaIA = `SISTEMA: El usuario ha iniciado una partida nueva. 
     Misión: ${nombreVisible}. 
     Contexto inicial: ${introNarrativa} 
     Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
 
-    // Enviar a la IA (esto no aparecerá en el chat como texto del usuario si lo manejas bien)
     hablarConNarrador(mensajeParaIA);
 }
 
