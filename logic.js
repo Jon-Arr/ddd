@@ -196,6 +196,7 @@ window.hablarConNarrador = async function(mensajeUsuario) {
     }
 };
 
+
 // ASEGÚRATE DE QUE ESTA LÍNEA ESTÉ AL FINAL DEL ARCHIVO
 window.hablarConNarrador = hablarConNarrador;
 
