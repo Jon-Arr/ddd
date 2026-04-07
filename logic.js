@@ -225,7 +225,9 @@ document.addEventListener('DOMContentLoaded', () => {
 //******************BG AVENTURA
 
 function updateAdventureVisuals() {
-    const mission = document.getElementById('mission-select').value;
+    const mainSelect = document.getElementById('mission-select');
+    const menuSelect = document.getElementById('menu-mission-select');
+    const mission = (mainSelect && mainSelect.value) ? mainSelect.value : (menuSelect ? menuSelect.value : "");
     const body = document.body;
 
     // Diccionario de imágenes según la misión
