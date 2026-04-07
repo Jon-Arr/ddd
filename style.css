@@ -177,6 +177,11 @@ main {
     /* Opcional: difumina un poco el fondo detrás del panel */
 }
 
+.menu-principal {
+    display: flex;
+    justify-content: center;
+}
+
 .mision {
     margin-bottom: 20px;
     padding: 10px;
