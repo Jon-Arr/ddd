@@ -323,6 +323,7 @@ function newGame() {
     // Esto prepara el fondo mientras la pantalla del menú aún está encima
     updateAdventureVisuals();
 
+
     // 3. Manejo de música
     if (musica) {
         musica.volume = 0.5;
@@ -334,14 +335,20 @@ function newGame() {
     // 4. Ocultar el menú principal
     document.getElementById('main-menu').style.display = 'none';
 
-    // 5. Preparar narrativa
-    const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura.";
+    mostrarPantallaContexto(misionID, nombreVisible, () => {
+        // Todo lo que ocurra aquí dentro pasará DESPUÉS de los 3 segundos
+        // 5. Preparar narrativa
+        const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura...";
+        // 6. Enviar a la IA
+        const mensajeParaIA = `SISTEMA: El usuario ha iniciado la misión ${nombreVisible}. Contexto: ${introNarrativa}Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
+        hablarConNarrador(mensajeParaIA);
+        
+        // Iniciar música si lo deseas aquí
+        const musica = document.getElementById('musica-ambiental');
+        if (musica) musica.play().catch(e => console.log(e));
+    });
 
-    // 6. Enviar a la IA
-    const mensajeParaIA = `SISTEMA: El usuario ha iniciado una partida nueva. 
-    Misión: ${nombreVisible}. 
-    Contexto inicial: ${introNarrativa} 
-    Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
+
 
     hablarConNarrador(mensajeParaIA);
 }
@@ -469,6 +476,40 @@ function narrarVoz(texto) {
 window.speechSynthesis.onvoiceschanged = () => {
     window.speechSynthesis.getVoices();
 };
+
+//****************** PANTALLA DE CONTEXTO INICIAL
+
+function mostrarPantallaContexto(misionID, nombreVisible, callback) {
+    const overlay = document.getElementById('context-overlay');
+    const imgElement = document.getElementById('context-image');
+    const titleElement = document.getElementById('context-title');
+
+    // Mapeo de imágenes (mismas rutas que tus fondos)
+    const rutas = {
+        "Novato 1": "img/bosque.webp",
+        "Novato 2": "img/baile.webp",
+        "Novato 3": "img/alquimia.jpg",
+        "Intermedio 4": "img/espejos.jpg",
+        "Intermedio 5": "img/laberinto.jpg",
+        "Intermedio 6": "img/boda.jpg"
+    };
+
+    titleElement.innerText = nombreVisible;
+    imgElement.src = rutas[misionID] || "";
+    
+    // Mostrar el cuadro
+    overlay.style.display = 'flex';
+    overlay.style.opacity = '1';
+
+    // Esperar 3 segundos y luego desvanecer
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            if (callback) callback(); // Iniciar el narrador después de la imagen
+        }, 1000); // Tiempo que tarda el desvanecimiento
+    }, 3000); // Tiempo que se queda la imagen fija
+}
 
 
 //****************** EXPORTACIÓN DE FUNCIONES
