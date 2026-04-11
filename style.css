@@ -111,6 +111,14 @@ h2 {
     width: 100%;
 }
 
+#current-adventure-title {
+    font-family: 'Cinzel', serif; /* Usa la misma fuente medieval de los títulos */
+    border-bottom: 1px solid #d2b48c;
+    display: inline-block;
+    padding-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
 button, select, label, .result-display {
     font-family: 'Cinzel', serif;
     font-weight: 700;
