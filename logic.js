@@ -324,7 +324,7 @@ function loadGame() {
         updateAdventureVisuals(); // Cambia el fondo según la misión cargada
 
         // Avisar al Narrador que hemos vuelto
-        hablarConNarrador("He cargado una partida guardada en la misión: " + data.mision + ". Por favor, resume brevemente dónde nos quedamos.");
+        hablarConNarrador("He cargado una partida guardada en la misión: " + data.mision + ". Por favor, continua actuando como Dungeon Master, resume brevemente dónde nos quedamos y sigue la historia desde este punto.");
     } else {
         alert("No se encontró ninguna partida guardada en este dispositivo.");
     }
@@ -365,7 +365,7 @@ function newGame() {
         // 5. Preparar narrativa
         const introNarrativa = introMisiones[misionID] || "Comenzamos una nueva aventura...";
         // 6. Enviar a la IA
-        const mensajeParaIA = `SISTEMA: El usuario ha iniciado la misión ${nombreVisible}. Contexto: ${introNarrativa}Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto.`;
+        const mensajeParaIA = `SISTEMA: El usuario ha iniciado la misión ${nombreVisible}. Contexto: ${introNarrativa}Por favor, actúa como Dungeon Master e inicia la narración basándote en este contexto. No olvides cada detalle que se te entrega y siempre sigue la linea de la historia`;
         hablarConNarrador(mensajeParaIA);
         
         // Iniciar música si lo deseas aquí
