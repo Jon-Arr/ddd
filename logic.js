@@ -233,6 +233,26 @@ function updateAdventureVisuals() {
     
     if (titleDisplay) {
         titleDisplay.innerText = mission; 
+        switch (mission) {
+            case "Novato 1":
+                titleDisplay.innerText = "El Rescate del Cachorro Alado";
+                break;
+            case "Novato 2":
+                titleDisplay.innerText = "El Baile de las Sombras Gemelas";
+                break;
+            case "Novato 3":
+                titleDisplay.innerText = "La Pócima de la Risa";
+                break;
+            case "Intermedio 4":
+                titleDisplay.innerText = "El Juicio de los Espejos";
+                break;
+            case "Intermedio 5":
+                titleDisplay.innerText = "El Laberinto de los Suspiros";
+                break;
+            case "Intermedio 6":
+                titleDisplay.innerText = "La Boda del Dragón";
+                break;
+        }
     }
 
     // Diccionario de imágenes según la misión
