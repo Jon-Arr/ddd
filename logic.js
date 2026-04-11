@@ -229,6 +229,11 @@ function updateAdventureVisuals() {
     const menuSelect = document.getElementById('menu-mission-select');
     const mission = (mainSelect && mainSelect.value) ? mainSelect.value : (menuSelect ? menuSelect.value : "");
     const body = document.body;
+    const titleDisplay = document.getElementById('current-adventure-title');
+    
+    if (titleDisplay) {
+        titleDisplay.innerText = mission; 
+    }
 
     // Diccionario de imágenes según la misión
     const imagenesFondo = {
@@ -508,7 +513,7 @@ function mostrarPantallaContexto(misionID, nombreVisible, callback) {
             overlay.style.display = 'none';
             if (callback) callback(); // Iniciar el narrador después de la imagen
         }, 1000); // Tiempo que tarda el desvanecimiento
-    }, 3000); // Tiempo que se queda la imagen fija
+    }, 5000); // Tiempo que se queda la imagen fija
 }
 
 
